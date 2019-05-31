@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг» [![Build status][travis-image]][travis-url]
 
 * Студент: [Sergey Shramko](https://up.htmlacademy.ru/javascript/17/user/852139).
-* Наставник: `Неизвестно`.
+* Наставник: [Vladimir Korshunov](https://htmlacademy.ru/profile/bekobou).
 
 ---
 
