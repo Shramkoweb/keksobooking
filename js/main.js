@@ -61,3 +61,15 @@ var renderPinMockup = function (pins) { // рендер пинов по мока
 };
 
 renderPinMockup(generatePins(PINS_COUNT));
+
+var adForm = document.querySelector('.ad-form');
+var disableFieldsets = function (isDisabled) {
+  var fieldsets = adForm.querySelectorAll('fieldset');
+
+  for (var i = 0; i < fieldsets.length; i++) {
+    fieldsets[i].disabled = isDisabled;
+    
+  }
+}
+
+disableFieldsets(true);
