@@ -3,6 +3,7 @@
 var HOTEL_TYPES = ['palace', 'flat', 'house', 'bungalo'];
 var PIN_WIDTH = 50;
 var PIN_HEIGHT = 70;
+var PINS_COUNT = 8;
 var pinHorizontalRange = document.querySelector('.map__pins').clientWidth;
 var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
 var pinSimilarList = document.querySelector('.map__pins');
@@ -59,4 +60,4 @@ var renderPinMockup = function (pins) { // рендер пинов по мока
   document.querySelector('.map').classList.remove('map--faded');
 };
 
-renderPinMockup(generatePins(8));
+renderPinMockup(generatePins(PINS_COUNT));
