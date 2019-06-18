@@ -57,19 +57,21 @@ var renderPinMockup = function (pins) { // рендер пинов по мока
   }
 
   pinSimilarList.appendChild(fragment);
-  document.querySelector('.map').classList.remove('map--faded');
 };
 
 renderPinMockup(generatePins(PINS_COUNT));
 
+// Деактивация формы
+
 var adForm = document.querySelector('.ad-form');
+
 var disableFieldsets = function (isDisabled) {
   var fieldsets = adForm.querySelectorAll('fieldset');
-
-  for (var i = 0; i < fieldsets.length; i++) {
+  var mapFilters = document.querySelectorAll('.map__filter');
+  for (var i = 0; i < mapFilters.length; i++) {
     fieldsets[i].disabled = isDisabled;
-    
+    mapFilters[i].disabled = isDisabled;
   }
-}
+};
 
 disableFieldsets(true);
