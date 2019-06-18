@@ -6,6 +6,7 @@ var PIN_HEIGHT = 70;
 var PINS_COUNT = 8;
 var MAIN_PIN_WIDTH = 62;
 var MAIN_PIN_HEIGHT = 84;
+var isDisabled = true;
 var pinHorizontalRange = document.querySelector('.map__pins').clientWidth;
 var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
 var pinSimilarList = document.querySelector('.map__pins');
@@ -62,20 +63,22 @@ var renderPinMockup = function (pins) { // рендер пинов по мока
   document.querySelector('.map').classList.remove('map--faded');
 };
 
-// Деактивация формы
-
 var adForm = document.querySelector('.ad-form');
 
-var disableFieldsets = function (isDisabled) {
+var toggleFieldsets = function (disabled) { // Переключение активности формы
   var fieldsets = adForm.querySelectorAll('fieldset');
   var mapFilters = document.querySelectorAll('.map__filter');
-  for (var i = 0; i < mapFilters.length; i++) {
-    fieldsets[i].disabled = isDisabled;
-    mapFilters[i].disabled = isDisabled;
+
+  for (var i = 0; i < fieldsets.length; i++) {
+    fieldsets[i].disabled = disabled;
+  }
+
+  for (var k = 0; k < mapFilters.length; k++) {
+    mapFilters[k].disabled = disabled;
   }
 };
 
-disableFieldsets(true);
+toggleFieldsets(isDisabled);
 
 var mainPin = document.querySelector('.map__pin--main');
 var address = adForm.querySelector('#address');
@@ -89,7 +92,7 @@ var fillAdressField = function (x, y) {
 fillAdressField(mainPinXPosition, mainPinYPosition);
 
 var activatePage = function () {
-  disableFieldsets(false);
+  toggleFieldsets(!isDisabled);
   renderPinMockup(generatePins(PINS_COUNT));
   fillAdressField(mainPinXPosition + MAIN_PIN_WIDTH / 2, mainPinYPosition + MAIN_PIN_HEIGHT);
   mainPin.removeEventListener('mouseup', activatePage);
