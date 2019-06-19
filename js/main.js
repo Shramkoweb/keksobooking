@@ -118,3 +118,16 @@ var activatePage = function () {
 };
 
 mainPin.addEventListener('mouseup', activatePage);
+
+var houseType = adForm.querySelector('#type');
+var housePrice = adForm.querySelector('#price');
+var onHouseTypeChange = function () {
+  for (var i = 0; i < housingTypes.length; i++) {
+    if (houseType.value === housingTypes[i].type) {
+      housePrice.min = housingTypes[i].price;
+      housePrice.placeholder = housingTypes[i].price;
+    }
+  }
+};
+
+houseType.addEventListener('change', onHouseTypeChange);
