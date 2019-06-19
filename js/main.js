@@ -86,16 +86,16 @@ var address = adForm.querySelector('#address');
 var mainPinYPosition = mainPin.offsetTop;
 var mainPinXPosition = mainPin.offsetLeft;
 
-var fillAdressField = function (x, y) {
+var fillAddressField = function (x, y) {
   address.value = x + ', ' + y;
 };
 
-fillAdressField(mainPinXPosition, mainPinYPosition);
+fillAddressField(mainPinXPosition, mainPinYPosition);
 
 var activatePage = function () {
   setFieldsetsState(ON_FORM);
   renderPinMockup(generatePins(PINS_COUNT));
-  fillAdressField(mainPinXPosition + MAIN_PIN_WIDTH / 2, mainPinYPosition + MAIN_PIN_HEIGHT);
+  fillAddressField(mainPinXPosition + MAIN_PIN_WIDTH / 2, mainPinYPosition + MAIN_PIN_HEIGHT);
   mainPin.removeEventListener('mouseup', activatePage);
 };
 
