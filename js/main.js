@@ -1,6 +1,5 @@
 'use strict';
 
-var HOTEL_TYPES = ['palace', 'flat', 'house', 'bungalo'];
 var PIN_WIDTH = 50;
 var PIN_HEIGHT = 70;
 var PINS_COUNT = 8;
@@ -12,6 +11,24 @@ var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pi
 var pinSimilarList = document.querySelector('.map__pins');
 var pinHorizontalRange = pinSimilarList.clientWidth;
 
+var housingTypes = [
+  {
+    type: 'palace',
+    price: 10000
+  },
+  {
+    type: 'flat',
+    price: 1000
+  },
+  {
+    type: 'house',
+    price: 5000
+  },
+  {
+    type: 'bungalo',
+    price: 0
+  }
+];
 
 var getRandomItemFrom = function (array) { // получаем случайный элемент в переданом масиве
   return array[Math.floor(Math.random() * array.length)];
@@ -30,7 +47,7 @@ var generatePins = function (count) { // генерация масива дан�
         'avatar': 'img/avatars/user0' + i + '.png'
       },
       'offer': {
-        'type': getRandomItemFrom(HOTEL_TYPES)
+        'type': getRandomItemFrom(housingTypes).type
       },
       'location': {
         'x': getRandomInteger(0, pinHorizontalRange) - PIN_WIDTH / 2,
