@@ -30,36 +30,38 @@ var housingTypes = [
   }
 ];
 
-var getRandomItemFrom = function (array) { // получаем случайный элемент в переданом масиве
+var getRandomItemFrom = function (array) {
+  // получаем случайный элемент в переданом масиве
   return array[Math.floor(Math.random() * array.length)];
 };
 
-var getRandomInteger = function (min, max) { // получайем случайное число в заданом диапазоне включительно
+var getRandomInteger = function (min, max) {
+  // получаем случайное число в заданом диапазоне включительно
   return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 
-var generatePins = function (count) { // генерация масива данных для пинов
+var generatePins = function (count) {
+  // генерация масива данных для пинов
   var pins = [];
-
   for (var i = 1; i <= count; i++) {
     pins.push({
-      'author': {
-        'avatar': 'img/avatars/user0' + i + '.png'
+      author: {
+        avatar: 'img/avatars/user0' + i + '.png'
       },
-      'offer': {
-        'type': getRandomItemFrom(housingTypes).type
+      offer: {
+        type: getRandomItemFrom(housingTypes).type
       },
-      'location': {
-        'x': getRandomInteger(0, pinHorizontalRange) - PIN_WIDTH / 2,
-        'y': getRandomInteger(130, 630) - PIN_HEIGHT
+      location: {
+        x: getRandomInteger(0, pinHorizontalRange) - PIN_WIDTH / 2,
+        y: getRandomInteger(130, 630) - PIN_HEIGHT
       }
     });
   }
-
   return pins;
 };
 
-var createPinMockup = function (pin) { // создаем мокап пинов по темпейту
+var createPinMockup = function (pin) {
+  // создаем мокап пинов по темпейту
   var pinElement = pinTemplate.cloneNode(true);
 
   pinElement.style = 'left:' + pin.location.x + 'px; top:' + pin.location.y + 'px;';
@@ -69,8 +71,8 @@ var createPinMockup = function (pin) { // создаем мокап пинов �
   return pinElement;
 };
 
-
-var renderPinMockup = function (pins) { // рендер пинов по мокапам
+var renderPinMockup = function (pins) {
+  // рендер пинов по мокапам
   var fragment = document.createDocumentFragment();
 
   for (var i = 0; i < pins.length; i++) {
@@ -82,7 +84,8 @@ var renderPinMockup = function (pins) { // рендер пинов по мока
 
 var adForm = document.querySelector('.ad-form');
 
-var setFieldsetsState = function (disabled) { // Переключение активности формы
+var setFieldsetsState = function (disabled) {
+  // Переключение активности формы
   var fieldsets = adForm.querySelectorAll('fieldset');
   var mapFilters = document.querySelectorAll('.map__filter');
 
@@ -121,6 +124,7 @@ mainPin.addEventListener('mouseup', activatePage);
 
 var houseType = adForm.querySelector('#type');
 var housePrice = adForm.querySelector('#price');
+
 var onHouseTypeChange = function () {
   for (var i = 0; i < housingTypes.length; i++) {
     if (houseType.value === housingTypes[i].type) {
@@ -131,7 +135,6 @@ var onHouseTypeChange = function () {
 };
 
 houseType.addEventListener('change', onHouseTypeChange);
-
 
 var timeIn = adForm.querySelector('#timein');
 var timeOut = adForm.querySelector('#timeout');
