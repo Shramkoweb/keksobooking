@@ -131,3 +131,18 @@ var onHouseTypeChange = function () {
 };
 
 houseType.addEventListener('change', onHouseTypeChange);
+
+
+var timeIn = adForm.querySelector('#timein');
+var timeOut = adForm.querySelector('#timeout');
+
+var onTimeInChange = function () {
+  timeOut.value = timeIn.value;
+};
+
+var onTimeOutChange = function () {
+  timeIn.value = timeOut.value;
+};
+
+timeIn.addEventListener('change', onTimeInChange);
+timeOut.addEventListener('change', onTimeOutChange);
