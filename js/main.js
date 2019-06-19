@@ -47,7 +47,7 @@ var createPinMockup = function (pin) { // создаем мокап пинов �
 
   pinElement.style = 'left:' + pin.location.x + 'px; top:' + pin.location.y + 'px;';
   pinElement.querySelector('img').src = pin.author.avatar;
-  pinElement.querySelector('img').alt = pin.type;
+  pinElement.querySelector('img').alt = pin.offer.type;
 
   return pinElement;
 };
@@ -101,5 +101,3 @@ var activatePage = function () {
 };
 
 mainPin.addEventListener('mouseup', activatePage);
-
-
