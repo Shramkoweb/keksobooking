@@ -65,7 +65,7 @@ var renderPinMockup = function (pins) { // рендер пинов по мока
 
 var adForm = document.querySelector('.ad-form');
 
-var toggleFieldsets = function (disabled) { // Переключение активности формы
+var setFieldsetsState = function (disabled) { // Переключение активности формы
   var fieldsets = adForm.querySelectorAll('fieldset');
   var mapFilters = document.querySelectorAll('.map__filter');
 
@@ -78,7 +78,7 @@ var toggleFieldsets = function (disabled) { // Переключение акти
   }
 };
 
-toggleFieldsets(isDisabled);
+setFieldsetsState(isDisabled);
 
 var mainPin = document.querySelector('.map__pin--main');
 var address = adForm.querySelector('#address');
@@ -92,7 +92,7 @@ var fillAdressField = function (x, y) {
 fillAdressField(mainPinXPosition, mainPinYPosition);
 
 var activatePage = function () {
-  toggleFieldsets(!isDisabled);
+  setFieldsetsState(!isDisabled);
   renderPinMockup(generatePins(PINS_COUNT));
   fillAdressField(mainPinXPosition + MAIN_PIN_WIDTH / 2, mainPinYPosition + MAIN_PIN_HEIGHT);
   mainPin.removeEventListener('mouseup', activatePage);
