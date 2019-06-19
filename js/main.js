@@ -6,7 +6,8 @@ var PIN_HEIGHT = 70;
 var PINS_COUNT = 8;
 var MAIN_PIN_WIDTH = 62;
 var MAIN_PIN_HEIGHT = 84;
-var isDisabled = true;
+var OFF_FORM = true;
+var ON_FORM = false;
 var pinHorizontalRange = document.querySelector('.map__pins').clientWidth;
 var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
 var pinSimilarList = document.querySelector('.map__pins');
@@ -78,7 +79,7 @@ var setFieldsetsState = function (disabled) { // Переключение акт
   }
 };
 
-setFieldsetsState(isDisabled);
+setFieldsetsState(OFF_FORM);
 
 var mainPin = document.querySelector('.map__pin--main');
 var address = adForm.querySelector('#address');
@@ -92,7 +93,7 @@ var fillAdressField = function (x, y) {
 fillAdressField(mainPinXPosition, mainPinYPosition);
 
 var activatePage = function () {
-  setFieldsetsState(!isDisabled);
+  setFieldsetsState(ON_FORM);
   renderPinMockup(generatePins(PINS_COUNT));
   fillAdressField(mainPinXPosition + MAIN_PIN_WIDTH / 2, mainPinYPosition + MAIN_PIN_HEIGHT);
   mainPin.removeEventListener('mouseup', activatePage);
