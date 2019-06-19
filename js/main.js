@@ -3,6 +3,11 @@
 var HOTEL_TYPES = ['palace', 'flat', 'house', 'bungalo'];
 var PIN_WIDTH = 50;
 var PIN_HEIGHT = 70;
+var PINS_COUNT = 8;
+var MAIN_PIN_WIDTH = 62;
+var MAIN_PIN_HEIGHT = 84;
+var OFF_FORM = true;
+var ON_FORM = false;
 var pinHorizontalRange = document.querySelector('.map__pins').clientWidth;
 var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
 var pinSimilarList = document.querySelector('.map__pins');
@@ -59,4 +64,39 @@ var renderPinMockup = function (pins) { // рендер пинов по мока
   document.querySelector('.map').classList.remove('map--faded');
 };
 
-renderPinMockup(generatePins(8));
+var adForm = document.querySelector('.ad-form');
+
+var setFieldsetsState = function (disabled) { // Переключение активности формы
+  var fieldsets = adForm.querySelectorAll('fieldset');
+  var mapFilters = document.querySelectorAll('.map__filter');
+
+  for (var i = 0; i < fieldsets.length; i++) {
+    fieldsets[i].disabled = disabled;
+  }
+
+  for (var k = 0; k < mapFilters.length; k++) {
+    mapFilters[k].disabled = disabled;
+  }
+};
+
+setFieldsetsState(OFF_FORM);
+
+var mainPin = document.querySelector('.map__pin--main');
+var address = adForm.querySelector('#address');
+var mainPinYPosition = mainPin.offsetTop;
+var mainPinXPosition = mainPin.offsetLeft;
+
+var fillAdressField = function (x, y) {
+  address.value = x + ', ' + y;
+};
+
+fillAdressField(mainPinXPosition, mainPinYPosition);
+
+var activatePage = function () {
+  setFieldsetsState(ON_FORM);
+  renderPinMockup(generatePins(PINS_COUNT));
+  fillAdressField(mainPinXPosition + MAIN_PIN_WIDTH / 2, mainPinYPosition + MAIN_PIN_HEIGHT);
+  mainPin.removeEventListener('mouseup', activatePage);
+};
+
+mainPin.addEventListener('mouseup', activatePage);
