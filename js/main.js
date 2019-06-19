@@ -8,9 +8,9 @@ var MAIN_PIN_WIDTH = 62;
 var MAIN_PIN_HEIGHT = 84;
 var OFF_FORM = true;
 var ON_FORM = false;
-var pinHorizontalRange = document.querySelector('.map__pins').clientWidth;
 var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
 var pinSimilarList = document.querySelector('.map__pins');
+var pinHorizontalRange = pinSimilarList.clientWidth;
 
 
 var getRandomItemFrom = function (array) { // получаем случайный элемент в переданом масиве
@@ -61,7 +61,6 @@ var renderPinMockup = function (pins) { // рендер пинов по мока
   }
 
   pinSimilarList.appendChild(fragment);
-  document.querySelector('.map').classList.remove('map--faded');
 };
 
 var adForm = document.querySelector('.ad-form');
@@ -97,6 +96,10 @@ var activatePage = function () {
   renderPinMockup(generatePins(PINS_COUNT));
   fillAddressField(mainPinXPosition + MAIN_PIN_WIDTH / 2, mainPinYPosition + MAIN_PIN_HEIGHT);
   mainPin.removeEventListener('mouseup', activatePage);
+  document.querySelector('.map').classList.remove('map--faded');
+  adForm.classList.remove('ad-form--disabled');
 };
 
 mainPin.addEventListener('mouseup', activatePage);
+
+
