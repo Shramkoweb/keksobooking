@@ -18,11 +18,6 @@ var housingTypes = {
   bungalo: 0
 };
 
-var getRandomItemFrom = function (array) {
-  // получаем случайный элемент в переданом масиве
-  return array[Math.floor(Math.random() * array.length)];
-};
-
 var getRandomInteger = function (min, max) {
   // получаем случайное число в заданом диапазоне включительно
   return Math.floor(Math.random() * (max - min + 1)) + min;
