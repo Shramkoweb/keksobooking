@@ -3,13 +3,16 @@
 var PIN_WIDTH = 50;
 var PIN_HEIGHT = 70;
 var PINS_COUNT = 8;
-var MAIN_PIN_WIDTH = 62;
-var MAIN_PIN_HEIGHT = 84;
+var MAIN_PIN_WIDTH = 65;
+var MAIN_PIN_HEIGHT = 87;
+var MIN_MAIN_PIN_Y = 130;
+var MAX_MAIN_PIN_Y = 630;
 var OFF_FORM = true;
 var ON_FORM = false;
 var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
 var pinSimilarList = document.querySelector('.map__pins');
 var pinHorizontalRange = pinSimilarList.clientWidth;
+var map = document.querySelector('.map');
 
 var housingTypes = {
   BUNGALO: 0,
@@ -97,13 +100,73 @@ fillAddressField(mainPinXPosition, mainPinYPosition);
 var activatePage = function () {
   setFieldsetsState(ON_FORM);
   renderPinMockup(generatePins(PINS_COUNT));
-  fillAddressField(mainPinXPosition + MAIN_PIN_WIDTH / 2, mainPinYPosition + MAIN_PIN_HEIGHT);
-  mainPin.removeEventListener('mouseup', activatePage);
-  document.querySelector('.map').classList.remove('map--faded');
+  map.classList.remove('map--faded');
   adForm.classList.remove('ad-form--disabled');
 };
 
-mainPin.addEventListener('mouseup', activatePage);
+mainPin.addEventListener('mousedown', function (evt) {
+  if (map.classList.contains('map--faded')) {
+    activatePage();
+  }
+  var startCoordinates = {
+    x: evt.clientX,
+    y: evt.clientY
+  };
+
+  var onMouseMove = function (mouseMoveEvt) {
+    mouseMoveEvt.preventDefault();
+
+    var shift = {
+      x: startCoordinates.x - mouseMoveEvt.clientX,
+      y: startCoordinates.y - mouseMoveEvt.clientY
+    };
+
+    startCoordinates = {
+      x: mouseMoveEvt.clientX,
+      y: mouseMoveEvt.clientY
+    };
+
+    var currentY = mainPin.offsetTop - shift.y;
+    var currentX = mainPin.offsetLeft - shift.x;
+
+    if ((currentY > MIN_MAIN_PIN_Y) && (currentY < MAX_MAIN_PIN_Y)) {
+      mainPin.style.top = (mainPin.offsetTop - shift.y) + 'px';
+    }
+
+    if ((currentX > 0) && (currentX < (1200 - MAIN_PIN_WIDTH))) {
+      mainPin.style.left = (mainPin.offsetLeft - shift.x) + 'px';
+    }
+
+    address.placeholder = Math.floor(currentX + MAIN_PIN_WIDTH / 2) + ', ' + Math.floor(currentY + MAIN_PIN_HEIGHT);
+    address.value = Math.floor(currentX + MAIN_PIN_WIDTH / 2) + ', ' + Math.floor(currentY + MAIN_PIN_HEIGHT);
+  };
+
+  var onMouseUp = function (mouseUpEvt) {
+    mouseUpEvt.preventDefault();
+
+    var shift = {
+      x: startCoordinates.x - mouseUpEvt.clientX,
+      y: startCoordinates.y - mouseUpEvt.clientY
+    };
+
+    startCoordinates = {
+      x: mouseUpEvt.clientX,
+      y: mouseUpEvt.clientY
+    };
+
+    address.placeholder = Math.floor(mainPin.offsetLeft - shift.x + MAIN_PIN_WIDTH / 2) + ', ' + Math.floor(mainPin.offsetTop - shift.y + MAIN_PIN_HEIGHT);
+    address.value = Math.floor(mainPin.offsetLeft - shift.x + MAIN_PIN_WIDTH / 2) + ', ' + Math.floor(mainPin.offsetTop - shift.y + MAIN_PIN_HEIGHT);
+
+    mainPin.removeEventListener('mouseup', activatePage);
+    document.removeEventListener('mousemove', onMouseMove);
+    document.removeEventListener('mouseup', onMouseUp);
+  };
+
+  document.addEventListener('mousemove', onMouseMove);
+  document.addEventListener('mouseup', onMouseUp);
+});
+
+// Форма
 
 var houseType = adForm.querySelector('#type');
 var housePrice = adForm.querySelector('#price');
