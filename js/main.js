@@ -11,24 +11,12 @@ var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pi
 var pinSimilarList = document.querySelector('.map__pins');
 var pinHorizontalRange = pinSimilarList.clientWidth;
 
-var housingTypes = [
-  {
-    type: 'palace',
-    price: 10000
-  },
-  {
-    type: 'flat',
-    price: 1000
-  },
-  {
-    type: 'house',
-    price: 5000
-  },
-  {
-    type: 'bungalo',
-    price: 0
-  }
-];
+var housingTypes = {
+  palace: 10000,
+  flat: 1000,
+  house: 5000,
+  bungalo: 0
+};
 
 var getRandomItemFrom = function (array) {
   // получаем случайный элемент в переданом масиве
@@ -49,7 +37,7 @@ var generatePins = function (count) {
         avatar: 'img/avatars/user0' + i + '.png'
       },
       offer: {
-        type: getRandomItemFrom(housingTypes).type
+        type: 'title'
       },
       location: {
         x: getRandomInteger(0, pinHorizontalRange) - PIN_WIDTH / 2,
@@ -126,12 +114,8 @@ var houseType = adForm.querySelector('#type');
 var housePrice = adForm.querySelector('#price');
 
 var onHouseTypeChange = function () {
-  for (var i = 0; i < housingTypes.length; i++) {
-    if (houseType.value === housingTypes[i].type) {
-      housePrice.min = housingTypes[i].price;
-      housePrice.placeholder = housingTypes[i].price;
-    }
-  }
+  housePrice.min = housingTypes[houseType.value];
+  housePrice.placeholder = housingTypes[houseType.value];
 };
 
 houseType.addEventListener('change', onHouseTypeChange);
