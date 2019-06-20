@@ -12,10 +12,10 @@ var pinSimilarList = document.querySelector('.map__pins');
 var pinHorizontalRange = pinSimilarList.clientWidth;
 
 var housingTypes = {
-  palace: 10000,
-  flat: 1000,
-  house: 5000,
-  bungalo: 0
+  BUNGALO: 0,
+  FLAT: 1000,
+  HOUSE: 5000,
+  PALACE: 10000
 };
 
 var getRandomInteger = function (min, max) {
@@ -109,8 +109,8 @@ var houseType = adForm.querySelector('#type');
 var housePrice = adForm.querySelector('#price');
 
 var onHouseTypeChange = function () {
-  housePrice.min = housingTypes[houseType.value];
-  housePrice.placeholder = housingTypes[houseType.value];
+  housePrice.min = housingTypes[houseType.value.toUpperCase()];
+  housePrice.placeholder = housingTypes[houseType.value.toUpperCase()];
 };
 
 houseType.addEventListener('change', onHouseTypeChange);
