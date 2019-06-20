@@ -1,6 +1,5 @@
 'use strict';
 
-var HOTEL_TYPES = ['palace', 'flat', 'house', 'bungalo'];
 var PIN_WIDTH = 50;
 var PIN_HEIGHT = 70;
 var PINS_COUNT = 8;
@@ -8,52 +7,55 @@ var MAIN_PIN_WIDTH = 62;
 var MAIN_PIN_HEIGHT = 84;
 var OFF_FORM = true;
 var ON_FORM = false;
-var pinHorizontalRange = document.querySelector('.map__pins').clientWidth;
 var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
 var pinSimilarList = document.querySelector('.map__pins');
+var pinHorizontalRange = pinSimilarList.clientWidth;
 
-
-var getRandomItemFrom = function (array) { // получаем случайный элемент в переданом масиве
-  return array[Math.floor(Math.random() * array.length)];
+var housingTypes = {
+  BUNGALO: 0,
+  FLAT: 1000,
+  HOUSE: 5000,
+  PALACE: 10000
 };
 
-var getRandomInteger = function (min, max) { // получайем случайное число в заданом диапазоне включительно
+var getRandomInteger = function (min, max) {
+  // получаем случайное число в заданом диапазоне включительно
   return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 
-var generatePins = function (count) { // генерация масива данных для пинов
+var generatePins = function (count) {
+  // генерация масива данных для пинов
   var pins = [];
-
   for (var i = 1; i <= count; i++) {
     pins.push({
-      'author': {
-        'avatar': 'img/avatars/user0' + i + '.png'
+      author: {
+        avatar: 'img/avatars/user0' + i + '.png'
       },
-      'offer': {
-        'type': getRandomItemFrom(HOTEL_TYPES)
+      offer: {
+        type: 'title'
       },
-      'location': {
-        'x': getRandomInteger(0, pinHorizontalRange) - PIN_WIDTH / 2,
-        'y': getRandomInteger(130, 630) - PIN_HEIGHT
+      location: {
+        x: getRandomInteger(0, pinHorizontalRange) - PIN_WIDTH / 2,
+        y: getRandomInteger(130, 630) - PIN_HEIGHT
       }
     });
   }
-
   return pins;
 };
 
-var createPinMockup = function (pin) { // создаем мокап пинов по темпейту
+var createPinMockup = function (pin) {
+  // создаем мокап пинов по темпейту
   var pinElement = pinTemplate.cloneNode(true);
 
   pinElement.style = 'left:' + pin.location.x + 'px; top:' + pin.location.y + 'px;';
   pinElement.querySelector('img').src = pin.author.avatar;
-  pinElement.querySelector('img').alt = pin.type;
+  pinElement.querySelector('img').alt = pin.offer.type;
 
   return pinElement;
 };
 
-
-var renderPinMockup = function (pins) { // рендер пинов по мокапам
+var renderPinMockup = function (pins) {
+  // рендер пинов по мокапам
   var fragment = document.createDocumentFragment();
 
   for (var i = 0; i < pins.length; i++) {
@@ -61,12 +63,12 @@ var renderPinMockup = function (pins) { // рендер пинов по мока
   }
 
   pinSimilarList.appendChild(fragment);
-  document.querySelector('.map').classList.remove('map--faded');
 };
 
 var adForm = document.querySelector('.ad-form');
 
-var setFieldsetsState = function (disabled) { // Переключение активности формы
+var setFieldsetsState = function (disabled) {
+  // Переключение активности формы
   var fieldsets = adForm.querySelectorAll('fieldset');
   var mapFilters = document.querySelectorAll('.map__filter');
 
@@ -86,17 +88,43 @@ var address = adForm.querySelector('#address');
 var mainPinYPosition = mainPin.offsetTop;
 var mainPinXPosition = mainPin.offsetLeft;
 
-var fillAdressField = function (x, y) {
+var fillAddressField = function (x, y) {
   address.value = x + ', ' + y;
 };
 
-fillAdressField(mainPinXPosition, mainPinYPosition);
+fillAddressField(mainPinXPosition, mainPinYPosition);
 
 var activatePage = function () {
   setFieldsetsState(ON_FORM);
   renderPinMockup(generatePins(PINS_COUNT));
-  fillAdressField(mainPinXPosition + MAIN_PIN_WIDTH / 2, mainPinYPosition + MAIN_PIN_HEIGHT);
+  fillAddressField(mainPinXPosition + MAIN_PIN_WIDTH / 2, mainPinYPosition + MAIN_PIN_HEIGHT);
   mainPin.removeEventListener('mouseup', activatePage);
+  document.querySelector('.map').classList.remove('map--faded');
+  adForm.classList.remove('ad-form--disabled');
 };
 
 mainPin.addEventListener('mouseup', activatePage);
+
+var houseType = adForm.querySelector('#type');
+var housePrice = adForm.querySelector('#price');
+
+var onHouseTypeChange = function () {
+  housePrice.min = housingTypes[houseType.value.toUpperCase()];
+  housePrice.placeholder = housingTypes[houseType.value.toUpperCase()];
+};
+
+houseType.addEventListener('change', onHouseTypeChange);
+
+var timeIn = adForm.querySelector('#timein');
+var timeOut = adForm.querySelector('#timeout');
+
+var onTimeInChange = function () {
+  timeOut.value = timeIn.value;
+};
+
+var onTimeOutChange = function () {
+  timeIn.value = timeOut.value;
+};
+
+timeIn.addEventListener('change', onTimeInChange);
+timeOut.addEventListener('change', onTimeOutChange);
