@@ -133,7 +133,7 @@ mainPin.addEventListener('mousedown', function (evt) {
       mainPin.style.top = (mainPin.offsetTop - shift.y) + 'px';
     }
 
-    if ((currentX > 0) && (currentX < (1200 - MAIN_PIN_WIDTH))) {
+    if ((currentX > 0) && (currentX < (map.offsetWidth - MAIN_PIN_WIDTH))) {
       mainPin.style.left = (mainPin.offsetLeft - shift.x) + 'px';
     }
 
