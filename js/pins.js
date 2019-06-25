@@ -1,25 +1,30 @@
 'use strict';
 
-window.mainPin = (function () {
-  var PINS_COUNT = 8;
+(function () {
   var MAIN_PIN_WIDTH = 65;
   var MAIN_PIN_HEIGHT = 81;
   var MIN_MAIN_PIN_Y = 130;
   var MAX_MAIN_PIN_Y = 630;
   var mainPin = document.querySelector('.map__pin--main');
   var map = document.querySelector('.map');
-  var adForm = document.querySelector('.ad-form');
+  var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
+  var pinSimilarList = document.querySelector('.map__pins');
 
-  var activatePage = function () {
-    window.form.setFieldsetsState(window.form.onForm);
-    window.mainMap.renderPinMockup(window.data.generatePins(PINS_COUNT));
-    map.classList.remove('map--faded');
-    adForm.classList.remove('ad-form--disabled');
+  window.form.deactivateFieldsets();
+
+  var createPinMockup = function (pin) { // создаем мокап пинов по темпейту
+    var pinElement = pinTemplate.cloneNode(true);
+
+    pinElement.style = 'left:' + pin.location.x + 'px; top:' + pin.location.y + 'px;';
+    pinElement.querySelector('img').src = pin.author.avatar;
+    pinElement.querySelector('img').alt = pin.offer.type;
+
+    return pinElement;
   };
 
   mainPin.addEventListener('mousedown', function (evt) {
     if (map.classList.contains('map--faded')) {
-      activatePage();
+      window.activatePage();
     }
     var startCoordinates = {
       x: evt.clientX,
@@ -50,8 +55,7 @@ window.mainPin = (function () {
         mainPin.style.left = (mainPin.offsetLeft - shift.x) + 'px';
       }
 
-      window.form.address.placeholder = Math.floor(currentX + MAIN_PIN_WIDTH / 2) + ', ' + Math.floor(currentY + MAIN_PIN_HEIGHT);
-      window.form.address.value = Math.floor(currentX + MAIN_PIN_WIDTH / 2) + ', ' + Math.floor(currentY + MAIN_PIN_HEIGHT);
+      window.form.fillAddressField(currentX + MAIN_PIN_WIDTH / 2, currentY + MAIN_PIN_HEIGHT);
     };
 
     var onMouseUp = function (mouseUpEvt) {
@@ -67,10 +71,12 @@ window.mainPin = (function () {
         y: mouseUpEvt.clientY
       };
 
-      window.form.address.placeholder = Math.floor(mainPin.offsetLeft - shift.x + MAIN_PIN_WIDTH / 2) + ', ' + Math.floor(mainPin.offsetTop - shift.y + MAIN_PIN_HEIGHT);
-      window.form.address.value = Math.floor(mainPin.offsetLeft - shift.x + MAIN_PIN_WIDTH / 2) + ', ' + Math.floor(mainPin.offsetTop - shift.y + MAIN_PIN_HEIGHT);
+      var currentY = mainPin.offsetTop - shift.y;
+      var currentX = mainPin.offsetLeft - shift.x;
 
-      mainPin.removeEventListener('mouseup', activatePage);
+      window.form.fillAddressField(currentX + MAIN_PIN_WIDTH / 2, currentY + MAIN_PIN_HEIGHT);
+
+      mainPin.removeEventListener('mouseup', window.activatePage);
       document.removeEventListener('mousemove', onMouseMove);
       document.removeEventListener('mouseup', onMouseUp);
     };
@@ -78,4 +84,14 @@ window.mainPin = (function () {
     document.addEventListener('mousemove', onMouseMove);
     document.addEventListener('mouseup', onMouseUp);
   });
+
+  window.pins = function (pins) { // рендер пинов по мокапам
+    var fragment = document.createDocumentFragment();
+
+    for (var i = 0; i < pins.length; i++) {
+      fragment.appendChild(createPinMockup(pins[i]));
+    }
+
+    pinSimilarList.appendChild(fragment);
+  };
 })();
