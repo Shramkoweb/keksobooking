@@ -54,8 +54,7 @@
       }
     },
     fillAddressField: function (x, y) {
-      address.value = Math.floor(x) + ', ' + Math.floor(y);
-      address.placeholder = Math.floor(x) + ', ' + Math.floor(y);
+      address.value = 'x  ' + Math.floor(x) + ', y  ' + Math.floor(y);
     }
   };
 })();
