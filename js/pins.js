@@ -12,7 +12,7 @@
 
   window.form.deactivateFieldsets();
 
-  var createPinMockup = function (pin) { // создаем мокап пинов по темпейту
+  var renderPin = function (pin) { // создаем мокап пинов по темпейту
     var pinElement = pinTemplate.cloneNode(true);
 
     pinElement.style = 'left:' + pin.location.x + 'px; top:' + pin.location.y + 'px;';
@@ -89,7 +89,7 @@
     var fragment = document.createDocumentFragment();
 
     for (var i = 0; i < pins.length; i++) {
-      fragment.appendChild(createPinMockup(pins[i]));
+      fragment.appendChild(renderPin(pins[i]));
     }
 
     pinSimilarList.appendChild(fragment);
