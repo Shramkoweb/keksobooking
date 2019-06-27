@@ -5,12 +5,14 @@
   var MAIN_PIN_HEIGHT = 81;
   var MIN_MAIN_PIN_Y = 130;
   var MAX_MAIN_PIN_Y = 630;
+  var DISABLED_PAGE = true;
+  var ACTIVE_PAGE = false;
   var mainPin = document.querySelector('.map__pin--main');
   var map = document.querySelector('.map');
   var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
   var pinSimilarList = document.querySelector('.map__pins');
 
-  window.form.deactivateFieldsets();
+  window.form.setFieldsetsState(DISABLED_PAGE);
 
   var renderPin = function (pin) { // создаем мокап пинов по темпейту
     var pinElement = pinTemplate.cloneNode(true);
@@ -24,7 +26,7 @@
 
   mainPin.addEventListener('mousedown', function (evt) {
     if (map.classList.contains('map--faded')) {
-      window.activatePage();
+      window.setPageState(ACTIVE_PAGE);
     }
     var startCoordinates = {
       x: evt.clientX,

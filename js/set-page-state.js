@@ -8,8 +8,8 @@
 
   window.form.fillAddressField(mainPinXPosition, mainPinYPosition);
 
-  window.activatePage = function () {
-    window.form.activateFieldsets();
+  window.setPageState = function (state) {
+    window.form.setFieldsetsState(state);
     window.appendPins(window.getData());
     map.classList.remove('map--faded');
     adForm.classList.remove('ad-form--disabled');

@@ -35,22 +35,13 @@
   timeOut.addEventListener('change', onTimeOutChange);
 
   window.form = {
-    deactivateFieldsets: function () { // Активация полей формы
+    setFieldsetsState: function (state) { // Активация полей формы
       for (var i = 0; i < fieldsets.length; i++) {
-        fieldsets[i].disabled = true;
+        fieldsets[i].disabled = state;
       }
 
       for (var k = 0; k < mapFilters.length; k++) {
-        mapFilters[k].disabled = true;
-      }
-    },
-    activateFieldsets: function () {
-      for (var i = 0; i < fieldsets.length; i++) {
-        fieldsets[i].disabled = false;
-      }
-
-      for (var k = 0; k < mapFilters.length; k++) {
-        mapFilters[k].disabled = false;
+        mapFilters[k].disabled = state;
       }
     },
     fillAddressField: function (x, y) {
