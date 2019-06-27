@@ -54,7 +54,7 @@
       }
     },
     fillAddressField: function (x, y) {
-      address.value = 'x  ' + Math.floor(x) + ', y  ' + Math.floor(y);
+      address.value = Math.floor(x) + ', ' + Math.floor(y);
     }
   };
 })();
