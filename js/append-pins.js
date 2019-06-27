@@ -85,7 +85,7 @@
     document.addEventListener('mouseup', onMouseUp);
   });
 
-  window.pins = function (pins) { // рендер пинов по мокапам
+  window.appendPins = function (pins) { // рендер пинов по мокапам
     var fragment = document.createDocumentFragment();
 
     for (var i = 0; i < pins.length; i++) {

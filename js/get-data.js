@@ -3,12 +3,13 @@
 (function () {
   var PIN_WIDTH = 50;
   var PIN_HEIGHT = 70;
+  var PINS_COUNT = 8;
   var pinSimilarList = document.querySelector('.map__pins');
   var pinHorizontalRange = pinSimilarList.clientWidth;
 
-  window.data = function (count) { // генерация масива данных для пинов
+  window.getData = function () { // генерация масива данных для пинов
     var pins = [];
-    for (var i = 1; i <= count; i++) {
+    for (var i = 1; i <= PINS_COUNT; i++) {
       pins.push({
         author: {
           avatar: 'img/avatars/user0' + i + '.png'
