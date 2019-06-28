@@ -5,8 +5,7 @@
   var MAIN_PIN_HEIGHT = 81;
   var MIN_MAIN_PIN_Y = 130;
   var MAX_MAIN_PIN_Y = 630;
-  var DISABLED_PAGE = true;
-  var ACTIVE_PAGE = false;
+  var FORM_FIELDS_DISABLED = true;
   var PIN_WIDTH = 50;
   var PIN_HEIGHT = 70;
   var mainPin = document.querySelector('.map__pin--main');
@@ -14,7 +13,7 @@
   var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
   var pinSimilarList = document.querySelector('.map__pins');
 
-  window.form.setFieldsetsState(DISABLED_PAGE);
+  window.form.setFieldsetsState(FORM_FIELDS_DISABLED);
 
   var renderPin = function (pin) { // создаем мокап пинов по темпейту
     var pinElement = pinTemplate.cloneNode(true);
@@ -28,7 +27,7 @@
 
   mainPin.addEventListener('mousedown', function (evt) {
     if (map.classList.contains('map--faded')) {
-      window.setPageState(ACTIVE_PAGE);
+      window.map.activate();
     }
     var startCoordinates = {
       x: evt.clientX,
@@ -89,13 +88,15 @@
     document.addEventListener('mouseup', onMouseUp);
   });
 
-  window.appendPins = function (pins) { // рендер пинов по мокапам
-    var fragment = document.createDocumentFragment();
+  window.pin = {
+    append: function (pins) { // рендер пинов по мокапам
+      var fragment = document.createDocumentFragment();
 
-    for (var i = 0; i < pins.length; i++) {
-      fragment.appendChild(renderPin(pins[i]));
+      for (var i = 0; i < pins.length; i++) {
+        fragment.appendChild(renderPin(pins[i]));
+      }
+
+      pinSimilarList.appendChild(fragment);
     }
-
-    pinSimilarList.appendChild(fragment);
   };
 })();

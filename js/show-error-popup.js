@@ -3,7 +3,7 @@
 (function () {
   var errorTemplate = document.querySelector('#error').content.querySelector('.error');
 
-  window.showFormError = function () {
-    document.body.appendChild(errorTemplate);
+  window.showErrorPopup = function () {
+    document.querySelector('main').appendChild(errorTemplate);
   };
 })();
