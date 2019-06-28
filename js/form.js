@@ -34,6 +34,11 @@
   timeIn.addEventListener('change', onTimeInChange);
   timeOut.addEventListener('change', onTimeOutChange);
 
+  adForm.addEventListener('submit', function (evt) {
+    window.backend.save(new FormData(adForm), window.error, window.error);
+    evt.preventDefault();
+  });
+
   window.form = {
     setFieldsetsState: function (state) { // Активация полей формы
       for (var i = 0; i < fieldsets.length; i++) {

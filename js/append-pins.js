@@ -7,6 +7,8 @@
   var MAX_MAIN_PIN_Y = 630;
   var DISABLED_PAGE = true;
   var ACTIVE_PAGE = false;
+  var PIN_WIDTH = 50;
+  var PIN_HEIGHT = 70;
   var mainPin = document.querySelector('.map__pin--main');
   var map = document.querySelector('.map');
   var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
@@ -17,7 +19,7 @@
   var renderPin = function (pin) { // создаем мокап пинов по темпейту
     var pinElement = pinTemplate.cloneNode(true);
 
-    pinElement.style = 'left:' + pin.location.x + 'px; top:' + pin.location.y + 'px;';
+    pinElement.style = 'left:' + (pin.location.x - PIN_WIDTH / 2) + 'px; top:' + (pin.location.y - PIN_HEIGHT) + 'px;';
     pinElement.querySelector('img').src = pin.author.avatar;
     pinElement.querySelector('img').alt = pin.offer.type;
 

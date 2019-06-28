@@ -10,7 +10,7 @@
 
   window.setPageState = function (state) {
     window.form.setFieldsetsState(state);
-    window.appendPins(window.getData());
+    window.backend.load(window.appendPins, window.error);
     map.classList.remove('map--faded');
     adForm.classList.remove('ad-form--disabled');
   };
