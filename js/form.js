@@ -35,8 +35,8 @@
   timeOut.addEventListener('change', onTimeOutChange);
 
   adForm.addEventListener('submit', function (evt) {
-    window.backend.save(new FormData(adForm), window.error, window.error);
     evt.preventDefault();
+    window.backend.save(new FormData(adForm), alert, window.showFormError);
   });
 
   window.form = {
