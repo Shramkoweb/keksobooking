@@ -1,13 +1,13 @@
 'use strict';
 
 (function () {
-  var adForm = document.querySelector('.ad-form');
-  var address = adForm.querySelector('#address');
-  var houseType = adForm.querySelector('#type');
-  var housePrice = adForm.querySelector('#price');
-  var timeIn = adForm.querySelector('#timein');
-  var timeOut = adForm.querySelector('#timeout');
-  var fieldsets = adForm.querySelectorAll('fieldset');
+  var form = document.querySelector('.ad-form');
+  var address = form.querySelector('#address');
+  var houseType = form.querySelector('#type');
+  var housePrice = form.querySelector('#price');
+  var timeIn = form.querySelector('#timein');
+  var timeOut = form.querySelector('#timeout');
+  var fieldsets = form.querySelectorAll('fieldset');
   var mapFilters = document.querySelectorAll('.map__filter');
   var housingTypes = {
     BUNGALO: 0,
@@ -33,6 +33,11 @@
 
   timeIn.addEventListener('change', onTimeInChange);
   timeOut.addEventListener('change', onTimeOutChange);
+
+  form.addEventListener('submit', function (evt) {
+    evt.preventDefault();
+    window.backend.save(new FormData(form), alert, window.showErrorPopup);
+  });
 
   window.form = {
     setFieldsetsState: function (state) { // Активация полей формы
