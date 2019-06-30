@@ -8,10 +8,15 @@
   var FORM_FIELDS_DISABLED = true;
   var PIN_WIDTH = 50;
   var PIN_HEIGHT = 70;
+  var MAX_PINS_COUNT = 5;
   var mainPin = document.querySelector('.map__pin--main');
   var map = document.querySelector('.map');
   var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
   var pinSimilarList = document.querySelector('.map__pins');
+  var pinsDataCopy = [];
+  var filterForm = document.querySelector('.map__filters');
+  var filterType = filterForm.querySelector('#housing-type');
+  var filterRooms = filterForm.querySelector('#housing-rooms');
 
   window.form.setFieldsetsState(FORM_FIELDS_DISABLED);
 
@@ -27,13 +32,45 @@
 
   var appendPins = function (pins) { // рендер пинов по мокапам
     var fragment = document.createDocumentFragment();
-
     for (var i = 0; i < pins.length; i++) {
       fragment.appendChild(renderPin(pins[i]));
     }
 
     pinSimilarList.appendChild(fragment);
   };
+
+
+  var onSuccessHandler = function (data) {
+    pinsDataCopy = data;
+    appendPins(pinsDataCopy.slice(0, MAX_PINS_COUNT));
+  };
+
+  var filteringData = function (evt) {
+    window.util.clearContainer(pinSimilarList, 2);
+    var filterName = evt.target.name.substring(8);
+    var filteredArray = [];
+
+    if (evt.target.value === 'any') {
+      appendPins(pinsDataCopy.slice(0, MAX_PINS_COUNT));
+    }
+
+    if (filterName === 'type') {
+      filteredArray = pinsDataCopy.filter(function (it) {
+        return it.offer.type === evt.target.value;
+      });
+    }
+
+    if (filterName === 'rooms') {
+      filteredArray = pinsDataCopy.filter(function (it) {
+        return it.offer.rooms == evt.target.value;
+      });
+    }
+
+    appendPins(filteredArray.slice(0, MAX_PINS_COUNT));
+  };
+
+  filterType.addEventListener('change', filteringData);
+  filterRooms.addEventListener('change', filteringData);
 
   mainPin.addEventListener('mousedown', function (evt) {
     if (map.classList.contains('map--faded')) {
@@ -99,6 +136,6 @@
   });
 
   window.pin = {
-    append: appendPins
+    append: onSuccessHandler
   };
 })();
