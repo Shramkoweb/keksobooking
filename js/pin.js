@@ -25,6 +25,16 @@
     return pinElement;
   };
 
+  var appendPins = function (pins) { // рендер пинов по мокапам
+    var fragment = document.createDocumentFragment();
+
+    for (var i = 0; i < pins.length; i++) {
+      fragment.appendChild(renderPin(pins[i]));
+    }
+
+    pinSimilarList.appendChild(fragment);
+  };
+
   mainPin.addEventListener('mousedown', function (evt) {
     if (map.classList.contains('map--faded')) {
       window.map.activate();
@@ -89,14 +99,6 @@
   });
 
   window.pin = {
-    append: function (pins) { // рендер пинов по мокапам
-      var fragment = document.createDocumentFragment();
-
-      for (var i = 0; i < pins.length; i++) {
-        fragment.appendChild(renderPin(pins[i]));
-      }
-
-      pinSimilarList.appendChild(fragment);
-    }
+    append: appendPins
   };
 })();

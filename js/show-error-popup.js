@@ -14,7 +14,7 @@
     window.util.isEscEvent(evt, closeErrorPopup);
   };
 
-  window.showErrorPopup = function () {
+  var showErrorPopup = function () {
     mainPage.appendChild(errorTemplate);
     var errorButton = document.querySelector('.error__button');
     var errorPopup = document.querySelector('.error');
@@ -26,4 +26,6 @@
       closeErrorPopup();
     });
   };
+
+  window.showErrorPopup = showErrorPopup;
 })();

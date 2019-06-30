@@ -39,18 +39,22 @@
     window.backend.save(new FormData(form), alert, window.showErrorPopup);
   });
 
-  window.form = {
-    setFieldsetsState: function (state) { // Активация полей формы
-      for (var i = 0; i < fieldsets.length; i++) {
-        fieldsets[i].disabled = state;
-      }
-
-      for (var k = 0; k < mapFilters.length; k++) {
-        mapFilters[k].disabled = state;
-      }
-    },
-    fillAddressField: function (x, y) {
-      address.value = Math.floor(x) + ', ' + Math.floor(y);
+  var setFieldsetsState = function (state) { // Активация полей формы
+    for (var i = 0; i < fieldsets.length; i++) {
+      fieldsets[i].disabled = state;
     }
+
+    for (var k = 0; k < mapFilters.length; k++) {
+      mapFilters[k].disabled = state;
+    }
+  };
+
+  var fillAddressField = function (x, y) {
+    address.value = Math.floor(x) + ', ' + Math.floor(y);
+  };
+
+  window.form = {
+    setFieldsetsState: setFieldsetsState,
+    fillAddressField: fillAddressField
   };
 })();

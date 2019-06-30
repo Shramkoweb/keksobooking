@@ -10,17 +10,21 @@
 
   window.form.fillAddressField(mainPinXPosition, mainPinYPosition);
 
+  var activatePage = function () {
+    window.form.setFieldsetsState(FORM_FIELDS_ACTIVE);
+    window.backend.load(window.pin.append, window.showErrorMessage);
+    map.classList.remove('map--faded');
+    adForm.classList.remove('ad-form--disabled');
+  };
+
+  var disablePage = function () {
+    window.form.setFieldsetsState(FORM_FIELDS_DISABLED);
+    map.classList.add('map--faded');
+    adForm.classList.add('ad-form--disabled');
+  };
+
   window.map = {
-    activate: function () {
-      window.form.setFieldsetsState(FORM_FIELDS_ACTIVE);
-      window.backend.load(window.pin.append, window.showErrorMessage);
-      map.classList.remove('map--faded');
-      adForm.classList.remove('ad-form--disabled');
-    },
-    disable: function () {
-      window.form.setFieldsetsState(FORM_FIELDS_DISABLED);
-      map.classList.add('map--faded');
-      adForm.classList.add('ad-form--disabled');
-    }
+    activate: activatePage,
+    disable: disablePage
   };
 })();
