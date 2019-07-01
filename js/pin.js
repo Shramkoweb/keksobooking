@@ -40,8 +40,8 @@
   };
 
 
-  var onSuccessHandler = function (data) {
-    pinsDataCopy = data;
+  var onSuccessLoad = function (data) {
+    pinsDataCopy = data.slice();
     appendPins(pinsDataCopy.slice(0, MAX_PINS_COUNT));
   };
 
@@ -136,6 +136,6 @@
   });
 
   window.pin = {
-    append: onSuccessHandler
+    append: onSuccessLoad
   };
 })();
