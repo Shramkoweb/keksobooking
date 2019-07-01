@@ -62,7 +62,7 @@
 
     if (filterName === 'rooms') {
       filteredArray = pinsDataCopy.filter(function (it) {
-        return it.offer.rooms == evt.target.value;
+        return it.offer.rooms === parseInt(evt.target.value, 10);
       });
     }
 
