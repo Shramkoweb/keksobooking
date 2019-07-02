@@ -75,7 +75,7 @@
     selectFiltering(selectRooms, 'rooms');
     selectFiltering(selectGuests, 'guests');
     checkboxFiltering(featuresControls);
-    appendPins(filteredData);
+    appendPins(filteredData.slice(0, MAX_PINS_COUNT));
   };
 
   mapFillters.addEventListener('change', function () {
