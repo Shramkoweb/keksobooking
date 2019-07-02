@@ -45,6 +45,7 @@
   var selectType = mapFillters.querySelector('#housing-type');
   var selectRooms = mapFillters.querySelector('#housing-rooms');
   var selectGuests = mapFillters.querySelector('#housing-guests');
+  var featuresControls = document.querySelectorAll('#housing-features input[type="checkbox"]');
 
   // Фильтрация карты
   var updateMapPins = function () {
@@ -59,11 +60,21 @@
       }
     };
 
+    var checkboxFiltering = function (controls) {
+      controls.forEach(function (checkbox) {
+        if (checkbox.checked) {
+          filteredData = filteredData.filter(function (poster) {
+            return poster.offer.features.includes(checkbox.value);
+          });
+        }
+      });
+    };
+
 
     selectFiltering(selectType, 'type');
     selectFiltering(selectRooms, 'rooms');
     selectFiltering(selectGuests, 'guests');
-
+    checkboxFiltering(featuresControls);
     appendPins(filteredData);
   };
 
