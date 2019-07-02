@@ -5,6 +5,7 @@
   var FORM_FIELDS_ACTIVE = false;
   var MAX_PINS_COUNT = 5;
   var mapPins = document.querySelector('.map__pins');
+  var mapFillters = document.querySelector('.map__filters');
   var adForm = document.querySelector('.ad-form');
   var map = document.querySelector('.map');
   var mainPinYPosition = document.querySelector('.map__pin--main').offsetTop;
@@ -40,6 +41,30 @@
     map.classList.add('map--faded');
     adForm.classList.add('ad-form--disabled');
   };
+
+  var selectType = mapFillters.querySelector('#housing-type');
+
+  // Фильтрация карты
+  var updateMapPins = function () {
+    var filteredData = pinsDataCopy;
+    window.util.clearContainer(mapPins, 2);
+
+    var selectFiltering = function (control, type) {
+      if (control.value !== 'any') {
+        filteredData = filteredData.filter(function (poster) {
+          return poster.offer[type] === control.value;
+        });
+      }
+    };
+
+    selectFiltering(selectType, 'type');
+
+    appendPins(filteredData);
+  };
+
+  mapFillters.addEventListener('change', function () {
+    window.debounce(updateMapPins);
+  });
 
   window.map = {
     activate: activatePage,
