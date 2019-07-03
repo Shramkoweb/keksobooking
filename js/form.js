@@ -63,13 +63,13 @@
   });
 
   var setFieldsetsState = function (state) { // Активация полей формы
-    for (var i = 0; i < fieldsets.length; i++) {
-      fieldsets[i].disabled = state;
-    }
+    fieldsets.forEach(function (field) {
+      field.disabled = state;
+    });
 
-    for (var k = 0; k < mapFilters.length; k++) {
-      mapFilters[k].disabled = state;
-    }
+    mapFilters.forEach(function (field) {
+      field.disabled = state;
+    });
   };
 
   var fillAddressField = function (x, y) {
