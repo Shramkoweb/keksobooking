@@ -11,7 +11,6 @@
   var mainPin = document.querySelector('.map__pin--main');
   var map = document.querySelector('.map');
   var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
-  var pinSimilarList = document.querySelector('.map__pins');
 
   window.form.setFieldsetsState(FORM_FIELDS_DISABLED);
 
@@ -89,14 +88,6 @@
   });
 
   window.pin = {
-    append: function (pins) { // рендер пинов по мокапам
-      var fragment = document.createDocumentFragment();
-
-      for (var i = 0; i < pins.length; i++) {
-        fragment.appendChild(renderPin(pins[i]));
-      }
-
-      pinSimilarList.appendChild(fragment);
-    }
+    render: renderPin
   };
 })();

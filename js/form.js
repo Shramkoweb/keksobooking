@@ -9,12 +9,35 @@
   var timeOut = form.querySelector('#timeout');
   var fieldsets = form.querySelectorAll('fieldset');
   var mapFilters = document.querySelectorAll('.map__filter');
+  var formRoomNumber = document.querySelector('#room_number');
+  var formCapacity = document.querySelector('#capacity');
   var housingTypes = {
     BUNGALO: 0,
     FLAT: 1000,
     HOUSE: 5000,
     PALACE: 10000
   };
+  var formRoomCapacity = {
+    1: ['1'],
+    2: ['2', '1'],
+    3: ['3', '2', '1'],
+    100: ['0']
+  };
+
+  var onCapacityChange = function () {
+    var guests = formRoomCapacity[formRoomNumber.value];
+    formCapacity.value = guests[0];
+
+    Array.from(formCapacity.options).forEach(function (element) {
+      if (guests.includes(element.value)) {
+        element.disabled = false;
+      } else {
+        element.disabled = true;
+      }
+    });
+  };
+
+  formRoomNumber.addEventListener('change', onCapacityChange);
 
   var onHouseTypeChange = function () {
     housePrice.min = housingTypes[houseType.value.toUpperCase()];
@@ -39,18 +62,22 @@
     window.backend.save(new FormData(form), alert, window.showErrorPopup);
   });
 
-  window.form = {
-    setFieldsetsState: function (state) { // Активация полей формы
-      for (var i = 0; i < fieldsets.length; i++) {
-        fieldsets[i].disabled = state;
-      }
-
-      for (var k = 0; k < mapFilters.length; k++) {
-        mapFilters[k].disabled = state;
-      }
-    },
-    fillAddressField: function (x, y) {
-      address.value = Math.floor(x) + ', ' + Math.floor(y);
+  var setFieldsetsState = function (state) { // Активация полей формы
+    for (var i = 0; i < fieldsets.length; i++) {
+      fieldsets[i].disabled = state;
     }
+
+    for (var k = 0; k < mapFilters.length; k++) {
+      mapFilters[k].disabled = state;
+    }
+  };
+
+  var fillAddressField = function (x, y) {
+    address.value = Math.floor(x) + ', ' + Math.floor(y);
+  };
+
+  window.form = {
+    setFieldsetsState: setFieldsetsState,
+    fillAddressField: fillAddressField
   };
 })();
