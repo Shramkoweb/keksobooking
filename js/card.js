@@ -18,6 +18,12 @@
     });
   };
 
+  var removeChilds = function (topElement) {
+    while (topElement.firstChild) {
+      topElement.removeChild(topElement.firstChild);
+    }
+  };
+
   window.card = {
     create: function (post) {
       var mapCardElement = mapCardTemplate.cloneNode(true);
@@ -37,6 +43,22 @@
       if (post.offer.features.length > 0) {
         getOfferFeatures(post.offer.features, featuresContainer);
       }
+
+      var photosList = mapCardElement.querySelector('.popup__photos');
+      removeChilds(photosList);
+
+      var fragmentPhotos = document.createDocumentFragment();
+
+      post.offer.photos.forEach(function (source, index) {
+        var photo = document.createElement('img');
+        photo.classList.add('popup__photo');
+        photo.src = source;
+        photo.alt = 'Фото ' + index;
+        photo.style = 'width: 45px; height: 40px;';
+        fragmentPhotos.appendChild(photo);
+      });
+
+      photosList.appendChild(fragmentPhotos);
 
       return mapCardElement;
     }
