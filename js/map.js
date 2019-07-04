@@ -4,7 +4,6 @@
   var FORM_FIELDS_DISABLED = true;
   var FORM_FIELDS_ACTIVE = false;
   var MAX_PINS_COUNT = 5;
-  var mapPins = document.querySelector('.map__pins');
   var mapFillters = document.querySelector('.map__filters');
   var adForm = document.querySelector('.ad-form');
   var map = document.querySelector('.map');
@@ -15,18 +14,9 @@
 
   window.form.fillAddressField(mainPinXPosition, mainPinYPosition);
 
-  var appendPins = function (pins) { // рендер пинов по мокапам
-    var fragment = document.createDocumentFragment();
-    for (var i = 0; i < pins.length; i++) {
-      fragment.appendChild(window.pin.render(pins[i]));
-    }
-
-    mapPins.appendChild(fragment);
-  };
-
   var successDataLoad = function (data) {
     pinsDataCopy = data.slice();
-    appendPins(pinsDataCopy.slice(0, MAX_PINS_COUNT));
+    window.pin.add(pinsDataCopy.slice(0, MAX_PINS_COUNT));
   };
 
   var activatePage = function () {
@@ -50,7 +40,7 @@
   // Фильтрация карты
   var updateMapPins = function (data) {
     var filteredData = data;
-    window.util.clearContainer(mapPins, 2);
+    window.pin.clean();
 
     var selectFiltering = function (control, type) {
       if (control.value !== 'any') {
@@ -83,7 +73,7 @@
   var renderFilteredAds = function () {
     var filteredAds = updateMapPins(pinsDataCopy);
 
-    appendPins(filteredAds);
+    window.pin.add(filteredAds);
   };
 
   mapFillters.addEventListener('change', function () {

@@ -17,11 +17,6 @@
       if (evt.keyCode === ENTER_KEYCODE) {
         action();
       }
-    },
-    clearContainer: function (container, numChild) {
-      while (container.childElementCount > numChild) {
-        container.removeChild(container.lastChild);
-      }
     }
   };
 })();
