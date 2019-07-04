@@ -48,8 +48,8 @@
   var featuresControls = document.querySelectorAll('#housing-features input[type="checkbox"]');
 
   // Фильтрация карты
-  var updateMapPins = function () {
-    var filteredData = pinsDataCopy;
+  var updateMapPins = function (data) {
+    var filteredData = data;
     window.util.clearContainer(mapPins, 2);
 
     var selectFiltering = function (control, type) {
@@ -75,11 +75,19 @@
     selectFiltering(selectRooms, 'rooms');
     selectFiltering(selectGuests, 'guests');
     checkboxFiltering(featuresControls);
-    appendPins(filteredData.slice(0, MAX_PINS_COUNT));
+
+    return filteredData.slice(0, MAX_PINS_COUNT);
+  };
+
+
+  var renderFilteredAds = function () {
+    var filteredAds = updateMapPins(pinsDataCopy);
+
+    appendPins(filteredAds);
   };
 
   mapFillters.addEventListener('change', function () {
-    window.debounce(updateMapPins);
+    window.debounce(renderFilteredAds);
   });
 
   window.map = {
