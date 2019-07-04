@@ -17,6 +17,8 @@
   var successDataLoad = function (data) {
     pinsDataCopy = data.slice();
     window.pin.add(pinsDataCopy.slice(0, MAX_PINS_COUNT));
+
+    map.appendChild(window.card.create(pinsDataCopy[0]));
   };
 
   var activatePage = function () {
