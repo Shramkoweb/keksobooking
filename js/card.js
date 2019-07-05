@@ -10,17 +10,17 @@
     'palace': 'Дворец',
   };
 
-  var getOfferFeatures = function (array, element) {
-    array.forEach(function (item) {
+  var getOfferFeatures = function (features, element) {
+    features.forEach(function (item) {
       var featureElement = document.createElement('li');
       featureElement.classList.add('feature', 'feature--' + item);
       element.appendChild(featureElement);
     });
   };
 
-  var removeChilds = function (topElement) {
-    while (topElement.firstChild) {
-      topElement.removeChild(topElement.firstChild);
+  var removeChilds = function (parentElement) {
+    while (parentElement.firstChild) {
+      parentElement.removeChild(parentElement.firstChild);
     }
   };
 
