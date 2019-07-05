@@ -32,11 +32,13 @@
   window.backend = {
     load: function (onLoad, onError) {
       var xhr = request(onLoad, onError);
+
       xhr.open('GET', URL + '/data');
       xhr.send();
     },
     save: function (data, onLoad, onError) {
       var xhr = request(onLoad, onError);
+
       xhr.open('POST', URL);
       xhr.send(data);
     }

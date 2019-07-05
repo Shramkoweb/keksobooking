@@ -4,7 +4,6 @@
   var FORM_FIELDS_DISABLED = true;
   var FORM_FIELDS_ACTIVE = false;
   var MAX_PINS_COUNT = 5;
-  var mapPins = document.querySelector('.map__pins');
   var mapFillters = document.querySelector('.map__filters');
   var adForm = document.querySelector('.ad-form');
   var map = document.querySelector('.map');
@@ -15,18 +14,11 @@
 
   window.form.fillAddressField(mainPinXPosition, mainPinYPosition);
 
-  var appendPins = function (pins) { // рендер пинов по мокапам
-    var fragment = document.createDocumentFragment();
-    for (var i = 0; i < pins.length; i++) {
-      fragment.appendChild(window.pin.render(pins[i]));
-    }
-
-    mapPins.appendChild(fragment);
-  };
-
   var successDataLoad = function (data) {
     pinsDataCopy = data.slice();
-    appendPins(pinsDataCopy.slice(0, MAX_PINS_COUNT));
+    window.pin.add(pinsDataCopy.slice(0, MAX_PINS_COUNT));
+
+    map.appendChild(window.card.create(pinsDataCopy[0]));
   };
 
   var activatePage = function () {
@@ -48,9 +40,9 @@
   var featuresControls = document.querySelectorAll('#housing-features input[type="checkbox"]');
 
   // Фильтрация карты
-  var updateMapPins = function () {
-    var filteredData = pinsDataCopy;
-    window.util.clearContainer(mapPins, 2);
+  var updateMapPins = function (data) {
+    var filteredData = data;
+    window.pin.clean();
 
     var selectFiltering = function (control, type) {
       if (control.value !== 'any') {
@@ -75,11 +67,19 @@
     selectFiltering(selectRooms, 'rooms');
     selectFiltering(selectGuests, 'guests');
     checkboxFiltering(featuresControls);
-    appendPins(filteredData.slice(0, MAX_PINS_COUNT));
+
+    return filteredData.slice(0, MAX_PINS_COUNT);
+  };
+
+
+  var renderFilteredAds = function () {
+    var filteredAds = updateMapPins(pinsDataCopy);
+
+    window.pin.add(filteredAds);
   };
 
   mapFillters.addEventListener('change', function () {
-    window.debounce(updateMapPins);
+    window.debounce(renderFilteredAds);
   });
 
   window.map = {

@@ -8,13 +8,15 @@
   var FORM_FIELDS_DISABLED = true;
   var PIN_WIDTH = 50;
   var PIN_HEIGHT = 70;
+  var PINS_NUMBER = 5;
   var mainPin = document.querySelector('.map__pin--main');
   var map = document.querySelector('.map');
-  var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
+  var mapPins = map.querySelector('.map__pins');
 
   window.form.setFieldsetsState(FORM_FIELDS_DISABLED);
 
   var renderPin = function (pin) { // создаем мокап пинов по темпейту
+    var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
     var pinElement = pinTemplate.cloneNode(true);
 
     pinElement.style = 'left:' + (pin.location.x - PIN_WIDTH / 2) + 'px; top:' + (pin.location.y - PIN_HEIGHT) + 'px;';
@@ -87,7 +89,27 @@
     document.addEventListener('mouseup', onMouseUp);
   });
 
+  var removePins = function () {
+    var pins = mapPins.querySelectorAll('.map__pin:not(.map__pin--main)');
+    pins.forEach(function (pin) {
+      mapPins.removeChild(pin);
+    });
+  };
+
+  var appendPins = function (pins) {
+    var fragment = document.createDocumentFragment();
+    var pinsCount = (pins.length > PINS_NUMBER) ? PINS_NUMBER : pins.length;
+
+    for (var i = 0; i < pinsCount; i++) {
+      fragment.appendChild(renderPin(pins[i]));
+    }
+
+    mapPins.appendChild(fragment);
+  };
+
   window.pin = {
-    render: renderPin
+    add: appendPins,
+    render: renderPin,
+    clean: removePins
   };
 })();
