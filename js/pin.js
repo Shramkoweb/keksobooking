@@ -89,13 +89,6 @@
     document.addEventListener('mouseup', onMouseUp);
   });
 
-  var removePins = function () {
-    var pins = mapPins.querySelectorAll('.map__pin:not(.map__pin--main)');
-    pins.forEach(function (pin) {
-      mapPins.removeChild(pin);
-    });
-  };
-
   var appendPins = function (pins) {
     var fragment = document.createDocumentFragment();
     var pinsCount = (pins.length > PINS_NUMBER) ? PINS_NUMBER : pins.length;
@@ -107,9 +100,15 @@
     mapPins.appendChild(fragment);
   };
 
+  var deactivatePin = function (pins) {
+    pins.forEach(function (pin) {
+      pin.classList.remove('map__pin--active');
+    });
+  };
+
   window.pin = {
     add: appendPins,
     render: renderPin,
-    clean: removePins
+    deactivate: deactivatePin
   };
 })();
