@@ -24,6 +24,17 @@
     }
   };
 
+  var closePopUp = function () {
+    var popup = document.querySelector('.popup');
+    var pins = document.querySelectorAll('.map__pin:not(.map__pin--main)');
+
+    if (popup) {
+      popup.remove();
+    }
+
+    window.pin.deactivate(pins);
+  };
+
   window.card = {
     create: function (post) {
       var mapCardElement = mapCardTemplate.cloneNode(true);
@@ -61,6 +72,12 @@
       photosList.appendChild(fragmentPhotos);
 
       return mapCardElement;
+    },
+    escPress: function (evt) {
+      window.util.isEscEvent(evt, closePopUp);
+    },
+    clickPress: function () {
+      closePopUp();
     }
   };
 })();

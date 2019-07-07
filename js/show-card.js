@@ -19,10 +19,15 @@
           card.remove();
         }
 
+        // Вставка сгенерированой карточки
         map.appendChild(window.card.create(ads[index]));
 
-        // Генерация карточки
-        window.card.create(ads[index]);
+        // Отработка Esc
+        document.addEventListener('keydown', window.card.escPress);
+        // Отработка клика по крестику
+        var popupClose = map.querySelector('.popup__close');
+
+        popupClose.addEventListener('click', window.card.clickPress);
       });
     });
   };
