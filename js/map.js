@@ -17,7 +17,7 @@
     ads = data.slice();
     window.pin.add(ads);
 
-    map.appendChild(window.card.create(ads[0]));
+    window.showCard(ads);
   };
 
   var activatePage = function () {
@@ -82,6 +82,7 @@
     var filteredAds = updateMapPins(ads);
 
     window.pin.add(filteredAds);
+    window.showCard(filteredAds);
   };
 
   mapFillters.addEventListener('change', function () {

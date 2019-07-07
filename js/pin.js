@@ -100,8 +100,15 @@
     mapPins.appendChild(fragment);
   };
 
+  var deactivatePin = function (pins) {
+    pins.forEach(function (pin) {
+      pin.classList.remove('map__pin--active');
+    });
+  };
+
   window.pin = {
     add: appendPins,
-    render: renderPin
+    render: renderPin,
+    deactivate: deactivatePin
   };
 })();
