@@ -1,8 +1,25 @@
 'use strict';
 
 (function () {
+  var PRICE_MIN = 10000;
+  var PRICE_MAX = 50000;
+
+  var getPriceValue = function (price) {
+    if (price > PRICE_MAX) {
+      return 'high';
+    } else if (price < PRICE_MIN) {
+      return 'low';
+    } else {
+      return 'middle';
+    }
+  };
+
   var checkValue = function (elementValue, filterStateValue) {
     return filterStateValue === 'any' || filterStateValue === elementValue.toString();
+  };
+
+  var checkPrice = function (elementValue, filterStateValue) {
+    return filterStateValue === 'any' || filterStateValue === getPriceValue(elementValue);
   };
 
   var checkGuest = function (elementValue, filterStateValue) {
@@ -23,8 +40,9 @@
     var filteredAds = ads.slice();
     return filteredAds.filter(function (element) {
       return checkValue(element.offer.type, filterState.type) &&
-      checkGuest(element.offer.guests, filterState.guests) &&
-      checkValue(element.offer.rooms, filterState.rooms);
+        checkGuest(element.offer.guests, filterState.guests) &&
+        checkValue(element.offer.rooms, filterState.rooms) &&
+        checkPrice(element.offer.price, filterState.price);
     });
   };
 })();
