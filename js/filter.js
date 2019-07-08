@@ -47,7 +47,7 @@
 
     filtersCheckFeatures.forEach(function (checkbox) {
       filterState.features.push(checkbox.value);
-    })
+    });
 
     var filteredAds = ads.slice();
     return filteredAds.filter(function (element) {
