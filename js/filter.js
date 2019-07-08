@@ -26,9 +26,17 @@
     return filterStateValue === 'any' || filterStateValue <= elementValue;
   };
 
+  var checkFeatures = function (elementValue, filterStateValue) {
+    return filterStateValue.every(function (feature) {
+      return elementValue.includes(feature);
+    });
+  };
+
   window.filter = function (ads) {
     var filters = document.querySelector('.map__filters');
     var filtersSelects = filters.querySelectorAll('select');
+    var filtersCheckFeatures = filters.querySelectorAll('#housing-features input[type="checkbox"]:checked');
+
     var filterState = {
       features: []
     };
@@ -37,12 +45,17 @@
       filterState[element.name.split('-')[1]] = element.value;
     });
 
+    filtersCheckFeatures.forEach(function (checkbox) {
+      filterState.features.push(checkbox.value);
+    })
+
     var filteredAds = ads.slice();
     return filteredAds.filter(function (element) {
       return checkValue(element.offer.type, filterState.type) &&
         checkGuest(element.offer.guests, filterState.guests) &&
         checkValue(element.offer.rooms, filterState.rooms) &&
-        checkPrice(element.offer.price, filterState.price);
+        checkPrice(element.offer.price, filterState.price) &&
+        checkFeatures(element.offer.features, filterState.features);
     });
   };
 })();

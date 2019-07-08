@@ -33,11 +33,6 @@
     adForm.classList.add('ad-form--disabled');
   };
 
-  // var selectType = mapFillters.querySelector('#housing-type');
-  // var selectRooms = mapFillters.querySelector('#housing-rooms');
-  // var selectGuests = mapFillters.querySelector('#housing-guests');
-  // var featuresControls = document.querySelectorAll('#housing-features input[type="checkbox"]');
-
   var renderFilteredAds = function () {
     var filteredAds = window.filter(ads);
 
