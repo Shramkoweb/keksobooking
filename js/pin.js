@@ -106,9 +106,17 @@
     });
   };
 
+  var removePins = function () {
+    var pins = mapPins.querySelectorAll('.map__pin:not(.map__pin--main)');
+    pins.forEach(function (pin) {
+      mapPins.removeChild(pin);
+    });
+  };
+
   window.pin = {
     add: appendPins,
     render: renderPin,
-    deactivate: deactivatePin
+    deactivate: deactivatePin,
+    clean: removePins
   };
 })();

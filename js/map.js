@@ -33,54 +33,10 @@
     adForm.classList.add('ad-form--disabled');
   };
 
-  var selectType = mapFillters.querySelector('#housing-type');
-  var selectRooms = mapFillters.querySelector('#housing-rooms');
-  var selectGuests = mapFillters.querySelector('#housing-guests');
-  var featuresControls = document.querySelectorAll('#housing-features input[type="checkbox"]');
-
-  var removePins = function () {
-    var mapPins = map.querySelector('.map__pins');
-    var pins = mapPins.querySelectorAll('.map__pin:not(.map__pin--main)');
-    pins.forEach(function (pin) {
-      mapPins.removeChild(pin);
-    });
-  };
-  // Фильтрация карты
-  var updateMapPins = function (data) {
-    var filteredData = data;
-    removePins();
-
-    var selectFiltering = function (control, type) {
-      if (control.value !== 'any') {
-        filteredData = filteredData.filter(function (poster) {
-          return poster.offer[type].toString() === control.value;
-        });
-      }
-    };
-
-    var checkboxFiltering = function (controls) {
-      controls.forEach(function (checkbox) {
-        if (checkbox.checked) {
-          filteredData = filteredData.filter(function (poster) {
-            return poster.offer.features.includes(checkbox.value);
-          });
-        }
-      });
-    };
-
-
-    selectFiltering(selectType, 'type');
-    selectFiltering(selectRooms, 'rooms');
-    selectFiltering(selectGuests, 'guests');
-    checkboxFiltering(featuresControls);
-
-    return filteredData;
-  };
-
-
   var renderFilteredAds = function () {
-    var filteredAds = updateMapPins(ads);
+    var filteredAds = window.filter(ads);
 
+    window.pin.clean();
     window.pin.add(filteredAds);
     window.showCard(filteredAds);
   };
