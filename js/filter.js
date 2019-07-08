@@ -22,7 +22,9 @@
 
     var filteredAds = ads.slice();
     return filteredAds.filter(function (element) {
-      return checkValue(element.offer.type, filterState.type) && checkGuest(element.offer.guests, filterState.guests);
+      return checkValue(element.offer.type, filterState.type) &&
+      checkGuest(element.offer.guests, filterState.guests) &&
+      checkValue(element.offer.rooms, filterState.rooms);
     });
   };
 })();
