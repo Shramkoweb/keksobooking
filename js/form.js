@@ -57,9 +57,17 @@
   timeIn.addEventListener('change', onTimeInChange);
   timeOut.addEventListener('change', onTimeOutChange);
 
+  var onSuccess = function () {
+    window.modal.show();
+  };
+
+  var onError = function (errorMessage) {
+    window.modal.show(errorMessage);
+  };
+
   form.addEventListener('submit', function (evt) {
     evt.preventDefault();
-    window.backend.save(new FormData(form), alert, window.showErrorPopup);
+    window.backend.save(new FormData(form), onSuccess, onError);
   });
 
   var setFieldsetsState = function (state) { // Активация полей формы

@@ -13,16 +13,21 @@
 
   window.form.fillAddressField(mainPinXPosition, mainPinYPosition);
 
-  var successDataLoad = function (data) {
+  var onSuccess = function (data) {
     ads = data.slice();
     window.pin.add(ads);
 
     window.showCard(ads);
   };
 
+  var onError = function (errorMessage) {
+    window.modal.show(errorMessage);
+  };
+
+
   var activatePage = function () {
     window.form.setFieldsetsState(FORM_FIELDS_ACTIVE);
-    window.backend.load(successDataLoad, window.showErrorMessage);
+    window.backend.load(onSuccess, onError);
     map.classList.remove('map--faded');
     adForm.classList.remove('ad-form--disabled');
   };

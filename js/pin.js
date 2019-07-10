@@ -27,9 +27,12 @@
   };
 
   mainPin.addEventListener('mousedown', function (evt) {
+    evt.preventDefault();
+
     if (map.classList.contains('map--faded')) {
       window.map.activate();
     }
+
     var startCoordinates = {
       x: evt.clientX,
       y: evt.clientY
@@ -80,7 +83,6 @@
 
       window.form.fillAddressField(currentX + MAIN_PIN_WIDTH / 2, currentY + MAIN_PIN_HEIGHT);
 
-      mainPin.removeEventListener('mouseup', window.activatePage);
       document.removeEventListener('mousemove', onMouseMove);
       document.removeEventListener('mouseup', onMouseUp);
     };
