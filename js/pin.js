@@ -5,15 +5,12 @@
   var MAIN_PIN_HEIGHT = 81;
   var MIN_MAIN_PIN_Y = 130;
   var MAX_MAIN_PIN_Y = 630;
-  var FORM_FIELDS_DISABLED = true;
   var PIN_WIDTH = 50;
   var PIN_HEIGHT = 70;
   var PINS_NUMBER = 5;
   var mainPin = document.querySelector('.map__pin--main');
   var map = document.querySelector('.map');
   var mapPins = map.querySelector('.map__pins');
-
-  window.form.setFieldsetsState(FORM_FIELDS_DISABLED);
 
   var renderPin = function (pin) { // создаем мокап пинов по темпейту
     var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
@@ -24,6 +21,23 @@
     pinElement.querySelector('img').alt = pin.offer.type;
 
     return pinElement;
+  };
+
+  var getMainPinCoords = function () {
+    return {
+      x: +mainPin.style.left.split('px')[0],
+      y: +mainPin.style.top.split('px')[0]
+    };
+  };
+
+  var initialPinCoord = getMainPinCoords();
+
+
+  var resetMainPin = function () {
+    mainPin.style.top = initialPinCoord.y + 'px';
+    mainPin.style.left = initialPinCoord.x + 'px';
+
+    window.form.fillAddressField(initialPinCoord.x, initialPinCoord.y);
   };
 
   mainPin.addEventListener('mousedown', function (evt) {
@@ -119,6 +133,7 @@
     add: appendPins,
     render: renderPin,
     deactivate: deactivatePin,
-    clean: removePins
+    clean: removePins,
+    initial: resetMainPin
   };
 })();
