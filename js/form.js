@@ -7,10 +7,11 @@
   var housePrice = form.querySelector('#price');
   var timeIn = form.querySelector('#timein');
   var timeOut = form.querySelector('#timeout');
-  var fieldsets = form.querySelectorAll('fieldset');
-  var mapFilters = document.querySelectorAll('.map__filter');
   var formRoomNumber = document.querySelector('#room_number');
   var formCapacity = document.querySelector('#capacity');
+  var fieldsets = form.querySelectorAll('fieldset');
+  var mapFilters = document.querySelectorAll('.map__filter');
+  var resetButton = form.querySelector('.ad-form__reset');
   var housingTypes = {
     BUNGALO: 0,
     FLAT: 1000,
@@ -57,27 +58,54 @@
   timeIn.addEventListener('change', onTimeInChange);
   timeOut.addEventListener('change', onTimeOutChange);
 
+  var onSuccess = function () {
+    window.modal.show();
+    window.map.disable();
+  };
+
+  var onError = function (errorMessage) {
+    window.modal.show(errorMessage);
+  };
+
   form.addEventListener('submit', function (evt) {
     evt.preventDefault();
-    window.backend.save(new FormData(form), alert, window.showErrorPopup);
+    window.backend.save(new FormData(form), onSuccess, onError);
   });
-
-  var setFieldsetsState = function (state) { // Активация полей формы
-    fieldsets.forEach(function (field) {
-      field.disabled = state;
-    });
-
-    mapFilters.forEach(function (field) {
-      field.disabled = state;
-    });
-  };
 
   var fillAddressField = function (x, y) {
     address.value = Math.floor(x) + ', ' + Math.floor(y);
   };
 
+
+  var disableFields = function (fields) {
+    fields.forEach(function (field) {
+      field.disabled = true;
+    });
+  };
+
+  var enableFields = function (fields) {
+    fields.forEach(function (field) {
+      field.disabled = false;
+    });
+  };
+
+  var disableForm = function () {
+    form.classList.add('ad-form--disabled');
+    form.reset();
+    disableFields(fieldsets);
+    disableFields(mapFilters);
+  };
+
+  resetButton.addEventListener('click', function () {
+    window.map.disable();
+  });
+
+
   window.form = {
-    setFieldsetsState: setFieldsetsState,
-    fillAddressField: fillAddressField
+    // setFieldsetsState: setFieldsetsState,
+    enableFields: enableFields,
+    disableFields: disableFields,
+    fillAddressField: fillAddressField,
+    disable: disableForm
   };
 })();
