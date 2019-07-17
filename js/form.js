@@ -12,7 +12,7 @@
   var fieldsets = form.querySelectorAll('fieldset');
   var mapFilters = document.querySelectorAll('.map__filter');
   var resetButton = form.querySelector('.ad-form__reset');
-  var housingTypes = {
+  var HousingTypes = {
     BUNGALO: 0,
     FLAT: 1000,
     HOUSE: 5000,
@@ -41,8 +41,8 @@
   formRoomNumber.addEventListener('change', onCapacityChange);
 
   var onHouseTypeChange = function () {
-    housePrice.min = housingTypes[houseType.value.toUpperCase()];
-    housePrice.placeholder = housingTypes[houseType.value.toUpperCase()];
+    housePrice.min = HousingTypes[houseType.value.toUpperCase()];
+    housePrice.placeholder = HousingTypes[houseType.value.toUpperCase()];
   };
 
   houseType.addEventListener('change', onHouseTypeChange);
