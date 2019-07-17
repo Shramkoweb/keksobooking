@@ -23,11 +23,11 @@
         map.appendChild(window.card.create(ads[index]));
 
         // Отработка Esc
-        document.addEventListener('keydown', window.card.escPress);
+        document.addEventListener('keydown', window.card.onEscPress);
         // Отработка клика по крестику
         var popupClose = map.querySelector('.popup__close');
 
-        popupClose.addEventListener('click', window.card.clickPress);
+        popupClose.addEventListener('click', window.card.onClosePress);
       });
     });
   };

@@ -10,7 +10,6 @@
   var fieldsets = adForm.querySelectorAll('fieldset');
   var mapFilters = document.querySelectorAll('.map__filter');
 
-
   window.form.fillAddressField(mainPinXPosition, mainPinYPosition);
 
   var onSuccess = function (data) {
@@ -38,6 +37,10 @@
     window.pin.initial();
     window.form.disableFields(fieldsets);
     window.form.disableFields(mapFilters);
+    var card = map.querySelector('.map__card');
+    if (card) {
+      card.remove();
+    }
     window.pin.clean();
     map.classList.add('map--faded');
     adForm.classList.add('ad-form--disabled');
@@ -54,10 +57,6 @@
   };
 
   mapFillters.addEventListener('change', function () {
-    var card = map.querySelector('.map__card');
-    if (card) {
-      card.remove();
-    }
     window.debounce(renderFilteredAds);
   });
 

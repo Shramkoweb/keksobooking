@@ -73,10 +73,10 @@
 
       return mapCardElement;
     },
-    escPress: function (evt) {
+    onEscPress: function (evt) {
       window.util.isEscEvent(evt, closePopUp);
     },
-    clickPress: function () {
+    onClosePress: function () {
       closePopUp();
     }
   };
