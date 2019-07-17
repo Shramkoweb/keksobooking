@@ -43,6 +43,8 @@
     adForm.classList.add('ad-form--disabled');
   };
 
+  disablePage();
+
   var renderFilteredAds = function () {
     var filteredAds = window.filter(ads);
 
