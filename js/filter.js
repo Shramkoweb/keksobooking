@@ -9,9 +9,9 @@
       return 'high';
     } else if (price < PRICE_MIN) {
       return 'low';
-    } else {
-      return 'middle';
     }
+
+    return 'middle';
   };
 
   var checkValue = function (elementValue, filterStateValue) {

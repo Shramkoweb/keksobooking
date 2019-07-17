@@ -105,6 +105,13 @@
     document.addEventListener('mouseup', onMouseUp);
   });
 
+  var onEnterPress = function (evt) {
+    window.util.isEnterEvent(evt, window.map.activate);
+    mainPin.removeEventListener('keydown', onEnterPress);
+  };
+
+   mainPin.addEventListener('keydown', onEnterPress);
+
   var appendPins = function (pins) {
     var fragment = document.createDocumentFragment();
     var pinsCount = (pins.length > PINS_NUMBER) ? PINS_NUMBER : pins.length;
