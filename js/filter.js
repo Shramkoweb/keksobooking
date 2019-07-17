@@ -9,9 +9,9 @@
       return 'high';
     } else if (price < PRICE_MIN) {
       return 'low';
-    } else {
-      return 'middle';
     }
+
+    return 'middle';
   };
 
   var checkValue = function (elementValue, filterStateValue) {
@@ -20,10 +20,6 @@
 
   var checkPrice = function (elementValue, filterStateValue) {
     return filterStateValue === 'any' || filterStateValue === getPriceValue(elementValue);
-  };
-
-  var checkGuest = function (elementValue, filterStateValue) {
-    return filterStateValue === 'any' || filterStateValue <= elementValue;
   };
 
   var checkFeatures = function (elementValue, filterStateValue) {
@@ -52,7 +48,7 @@
     var filteredAds = ads.slice();
     return filteredAds.filter(function (element) {
       return checkValue(element.offer.type, filterState.type) &&
-        checkGuest(element.offer.guests, filterState.guests) &&
+        checkValue(element.offer.guests, filterState.guests) &&
         checkValue(element.offer.rooms, filterState.rooms) &&
         checkPrice(element.offer.price, filterState.price) &&
         checkFeatures(element.offer.features, filterState.features);

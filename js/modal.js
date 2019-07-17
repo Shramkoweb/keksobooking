@@ -12,11 +12,15 @@
     var modal = mainPage.querySelector('.modal');
     modal.remove();
     document.removeEventListener('keydown', onEscPress);
-    document.removeEventListener('mousedown', closeModal);
+    document.removeEventListener('mousedown', onModalClick);
   };
 
   var onEscPress = function (evt) {
     window.util.isEscEvent(evt, closeModal);
+  };
+
+  var onModalClick = function () {
+    closeModal();
   };
 
   var showModal = function (errorMessage) {
@@ -28,7 +32,7 @@
     }
 
     document.addEventListener('keydown', onEscPress);
-    document.addEventListener('mousedown', closeModal);
+    document.addEventListener('mousedown', onModalClick);
   };
 
   window.modal = {

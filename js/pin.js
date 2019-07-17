@@ -42,10 +42,7 @@
 
   mainPin.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
-
-    if (map.classList.contains('map--faded')) {
-      window.map.activate();
-    }
+    window.map.activate();
 
     var startCoordinates = {
       x: evt.clientX,
@@ -105,6 +102,13 @@
     document.addEventListener('mouseup', onMouseUp);
   });
 
+  var onMainPinClick = function () {
+    window.map.activate();
+    mainPin.removeEventListener('click', onMainPinClick);
+  };
+
+  mainPin.addEventListener('click', onMainPinClick);
+
   var appendPins = function (pins) {
     var fragment = document.createDocumentFragment();
     var pinsCount = (pins.length > PINS_NUMBER) ? PINS_NUMBER : pins.length;
@@ -116,11 +120,13 @@
     mapPins.appendChild(fragment);
   };
 
-  var deactivatePin = function (pins) {
-    pins.forEach(function (pin) {
-      pin.classList.remove('map__pin--active');
-    });
+  var deactivatePin = function () {
+    var pinActive = document.querySelector('.map__pin--active');
+    if (pinActive) {
+      pinActive.classList.remove('map__pin--active');
+    }
   };
+
 
   var removePins = function () {
     var pins = mapPins.querySelectorAll('.map__pin:not(.map__pin--main)');
