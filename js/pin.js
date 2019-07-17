@@ -42,10 +42,7 @@
 
   mainPin.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
-
-    if (map.classList.contains('map--faded')) {
-      window.map.activate();
-    }
+    window.map.activate();
 
     var startCoordinates = {
       x: evt.clientX,
@@ -105,12 +102,12 @@
     document.addEventListener('mouseup', onMouseUp);
   });
 
-  var onEnterPress = function (evt) {
-    window.util.isEnterEvent(evt, window.map.activate);
-    mainPin.removeEventListener('keydown', onEnterPress);
+  var onMainPinClick = function (evt) {
+    window.map.activate();
+    mainPin.removeEventListener('click', onMainPinClick);
   };
 
-   mainPin.addEventListener('keydown', onEnterPress);
+   mainPin.addEventListener('click', onMainPinClick);
 
   var appendPins = function (pins) {
     var fragment = document.createDocumentFragment();
