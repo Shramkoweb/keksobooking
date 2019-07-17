@@ -116,11 +116,13 @@
     mapPins.appendChild(fragment);
   };
 
-  var deactivatePin = function (pins) {
-    pins.forEach(function (pin) {
-      pin.classList.remove('map__pin--active');
-    });
+  var deactivatePin = function () {
+    var pinActive = document.querySelector('.map__pin--active');
+    if (pinActive) {
+      pinActive.classList.remove('map__pin--active');
+    }
   };
+
 
   var removePins = function () {
     var pins = mapPins.querySelectorAll('.map__pin:not(.map__pin--main)');
