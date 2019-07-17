@@ -9,7 +9,7 @@
   var timeOut = form.querySelector('#timeout');
   var formRoomNumber = document.querySelector('#room_number');
   var formCapacity = document.querySelector('#capacity');
-  var fieldsets = form.querySelectorAll('fieldset');
+  var fieldsets = document.querySelectorAll('fieldset');
   var mapFilters = document.querySelectorAll('.map__filter');
   var resetButton = form.querySelector('.ad-form__reset');
   var HousingTypes = {
@@ -102,7 +102,6 @@
 
 
   window.form = {
-    // setFieldsetsState: setFieldsetsState,
     enableFields: enableFields,
     disableFields: disableFields,
     fillAddressField: fillAddressField,

@@ -7,7 +7,7 @@
   var mainPinYPosition = document.querySelector('.map__pin--main').offsetTop;
   var mainPinXPosition = document.querySelector('.map__pin--main').offsetLeft;
   var ads = [];
-  var fieldsets = adForm.querySelectorAll('fieldset');
+  var fieldsets = document.querySelectorAll('fieldset');
   var mapFilters = document.querySelectorAll('.map__filter');
 
   window.form.fillAddressField(mainPinXPosition, mainPinYPosition);
@@ -15,8 +15,9 @@
   var onSuccess = function (data) {
     ads = data.slice();
     window.pin.add(ads);
-
     window.card.show(ads);
+    window.form.enableFields(fieldsets);
+    window.form.enableFields(mapFilters);
   };
 
   var onError = function (errorMessage) {
@@ -33,8 +34,6 @@
 
   var activatePage = function () {
     if (map.classList.contains('map--faded')) {
-      window.form.enableFields(fieldsets);
-      window.form.enableFields(mapFilters);
       window.backend.load(onSuccess, onError);
       map.classList.remove('map--faded');
       adForm.classList.remove('ad-form--disabled');
