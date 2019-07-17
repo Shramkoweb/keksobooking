@@ -28,7 +28,7 @@
 
     filtersCheckFeatures.forEach(function (checkbox) {
       checkbox.checked = false;
-    })
+    });
   };
 
   var activatePage = function () {

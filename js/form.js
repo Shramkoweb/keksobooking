@@ -9,7 +9,6 @@
   var timeOut = form.querySelector('#timeout');
   var formRoomNumber = document.querySelector('#room_number');
   var formCapacity = document.querySelector('#capacity');
-  var popup = document.querySelector('.popup');
   var fieldsets = form.querySelectorAll('fieldset');
   var mapFilters = document.querySelectorAll('.map__filter');
   var resetButton = form.querySelector('.ad-form__reset');
