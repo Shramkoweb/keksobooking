@@ -28,7 +28,6 @@
 
   var capacitySync = function () {
     var guests = formRoomCapacity[formRoomNumber.value];
-    // formCapacity.value = guests[0];
 
     Array.from(formCapacity.options).forEach(function (element) {
       if (guests.includes(element.value)) {
@@ -46,9 +45,9 @@
   var checkCapacity = function () {
     var validityMessage;
     if (formRoomNumber.value !== '100') {
-      validityMessage = (formCapacity.value !== '0' && formCapacity.value <= formRoomNumber.value) ? '' : 'Для выбранного количества комнат укажите количество гостей отличное от 0, но не более ' + formRoomNumber.value;
+      validityMessage = (formCapacity.value !== '0' && formCapacity.value <= formRoomNumber.value) ? '' : 'Для выбранного количества комнат укажите количество гостей отличное от "Не для гостей", но не более ' + formRoomNumber.value;
     } else {
-      validityMessage = (formCapacity.value !== '0') ? 'Для выбранного количества комнат возможное количество гостей  - 0' : '';
+      validityMessage = (formCapacity.value !== '0') ? 'Для выбранного количества комнат возможное количество гостей  - "Не для гостей"' : '';
     }
 
     formCapacity.setCustomValidity(validityMessage);
