@@ -102,13 +102,6 @@
     document.addEventListener('mouseup', onMouseUp);
   });
 
-  var onMainPinClick = function () {
-    window.map.activate();
-    mainPin.removeEventListener('click', onMainPinClick);
-  };
-
-  mainPin.addEventListener('click', onMainPinClick);
-
   var appendPins = function (pins) {
     var fragment = document.createDocumentFragment();
 

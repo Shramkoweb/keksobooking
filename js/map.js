@@ -10,6 +10,7 @@
   var ads = [];
   var fieldsets = document.querySelectorAll('fieldset');
   var mapFilters = document.querySelectorAll('.map__filter');
+  var mainPin = document.querySelector('.map__pin--main');
 
   window.form.fillAddressField(mainPinXPosition, mainPinYPosition);
 
@@ -77,6 +78,10 @@
   };
 
   disablePage();
+
+  mainPin.addEventListener('keydown', function (evt) {
+    window.util.isEnterEvent(evt, activatePage);
+  });
 
   window.map = {
     activate: activatePage,
