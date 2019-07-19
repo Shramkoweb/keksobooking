@@ -4,6 +4,7 @@
   var mapFillters = document.querySelector('.map__filters');
   var adForm = document.querySelector('.ad-form');
   var map = document.querySelector('.map');
+  var filterCheckboxes = document.querySelectorAll('#housing-features input[type="checkbox"]');
   var mainPinYPosition = document.querySelector('.map__pin--main').offsetTop;
   var mainPinXPosition = document.querySelector('.map__pin--main').offsetLeft;
   var ads = [];
@@ -32,6 +33,14 @@
     });
   };
 
+  var renderFilteredAds = function () {
+    var filteredAds = window.filter(ads);
+
+    window.pin.clean();
+    window.pin.add(filteredAds);
+    window.card.show(filteredAds);
+  };
+
   var activatePage = function () {
     if (map.classList.contains('map--faded')) {
       window.backend.load(onSuccess, onError);
@@ -44,6 +53,15 @@
       });
     }
   };
+
+  filterCheckboxes.forEach(function (checkbox) {
+    checkbox.addEventListener('keydown', function (evt) {
+      if (evt.keyCode === 13) {
+        this.checked = !this.checked;
+        window.debounce(renderFilteredAds);
+      }
+    })
+  });
 
   var disablePage = function () {
     window.form.disable();
@@ -58,14 +76,6 @@
   };
 
   disablePage();
-
-  var renderFilteredAds = function () {
-    var filteredAds = window.filter(ads);
-
-    window.pin.clean();
-    window.pin.add(filteredAds);
-    window.card.show(filteredAds);
-  };
 
   window.map = {
     activate: activatePage,
