@@ -9,9 +9,10 @@
   var timeOut = form.querySelector('#timeout');
   var formRoomNumber = document.querySelector('#room_number');
   var formCapacity = document.querySelector('#capacity');
-  var fieldsets = form.querySelectorAll('fieldset');
+  var fieldsets = document.querySelectorAll('fieldset');
   var mapFilters = document.querySelectorAll('.map__filter');
   var resetButton = form.querySelector('.ad-form__reset');
+  var formCheckboxes = form.querySelectorAll('input[type="checkbox"]');
   var HousingTypes = {
     BUNGALO: 0,
     FLAT: 1000,
@@ -25,9 +26,8 @@
     100: ['0']
   };
 
-  var onCapacityChange = function () {
+  var capacitySync = function () {
     var guests = formRoomCapacity[formRoomNumber.value];
-    formCapacity.value = guests[0];
 
     Array.from(formCapacity.options).forEach(function (element) {
       if (guests.includes(element.value)) {
@@ -38,14 +38,46 @@
     });
   };
 
-  formRoomNumber.addEventListener('change', onCapacityChange);
+  formRoomNumber.addEventListener('change', function () {
+    capacitySync();
+  });
 
-  var onHouseTypeChange = function () {
+  var checkCapacity = function () {
+    var validityMessage;
+    if (formRoomNumber.value !== '100') {
+      validityMessage = (formCapacity.value !== '0' && formCapacity.value <= formRoomNumber.value) ? '' : 'Для выбранного количества комнат укажите количество гостей отличное от "Не для гостей", но не более ' + formRoomNumber.value;
+    } else {
+      validityMessage = (formCapacity.value !== '0') ? 'Для выбранного количества комнат возможное количество гостей  - "Не для гостей"' : '';
+    }
+
+    formCapacity.setCustomValidity(validityMessage);
+  };
+
+  formCheckboxes.forEach(function (checkbox) {
+    checkbox.addEventListener('keydown', function (evt) {
+      if (evt.keyCode === 13) {
+        evt.preventDefault();
+        checkbox.checked = !checkbox.checked;
+      }
+    });
+  });
+
+  formRoomNumber.addEventListener('change', function () {
+    checkCapacity();
+  });
+
+  formCapacity.addEventListener('change', function () {
+    checkCapacity();
+  });
+
+  var houseTypeSync = function () {
     housePrice.min = HousingTypes[houseType.value.toUpperCase()];
     housePrice.placeholder = HousingTypes[houseType.value.toUpperCase()];
   };
 
-  houseType.addEventListener('change', onHouseTypeChange);
+  houseType.addEventListener('change', function () {
+    houseTypeSync();
+  });
 
   var onTimeInChange = function () {
     timeOut.value = timeIn.value;
@@ -94,6 +126,8 @@
     form.reset();
     disableFields(fieldsets);
     disableFields(mapFilters);
+    capacitySync();
+    houseTypeSync();
   };
 
   resetButton.addEventListener('click', function () {
@@ -102,7 +136,6 @@
 
 
   window.form = {
-    // setFieldsetsState: setFieldsetsState,
     enableFields: enableFields,
     disableFields: disableFields,
     fillAddressField: fillAddressField,

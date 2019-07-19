@@ -37,7 +37,7 @@
     mainPin.style.top = initialPinCoord.y + 'px';
     mainPin.style.left = initialPinCoord.x + 'px';
 
-    window.form.fillAddressField(initialPinCoord.x, initialPinCoord.y);
+    window.form.fillAddressField(initialPinCoord.x + (MAIN_PIN_WIDTH / 2), initialPinCoord.y + MAIN_PIN_HEIGHT);
   };
 
   mainPin.addEventListener('mousedown', function (evt) {
@@ -65,7 +65,7 @@
       var currentY = mainPin.offsetTop - shift.y;
       var currentX = mainPin.offsetLeft - shift.x;
 
-      if ((currentY > MIN_MAIN_PIN_Y) && (currentY < MAX_MAIN_PIN_Y)) {
+      if ((currentY > MIN_MAIN_PIN_Y - MAIN_PIN_HEIGHT) && (currentY < MAX_MAIN_PIN_Y - MAIN_PIN_HEIGHT)) {
         mainPin.style.top = (mainPin.offsetTop - shift.y) + 'px';
       }
 
@@ -102,20 +102,14 @@
     document.addEventListener('mouseup', onMouseUp);
   });
 
-  var onMainPinClick = function () {
-    window.map.activate();
-    mainPin.removeEventListener('click', onMainPinClick);
-  };
-
-  mainPin.addEventListener('click', onMainPinClick);
-
   var appendPins = function (pins) {
     var fragment = document.createDocumentFragment();
-    var pinsCount = (pins.length > PINS_NUMBER) ? PINS_NUMBER : pins.length;
 
-    for (var i = 0; i < pinsCount; i++) {
-      fragment.appendChild(renderPin(pins[i]));
-    }
+    pins.forEach(function (pin, index) {
+      if (index < PINS_NUMBER) {
+        fragment.appendChild(renderPin(pin));
+      }
+    });
 
     mapPins.appendChild(fragment);
   };
