@@ -57,10 +57,10 @@
   filterCheckboxes.forEach(function (checkbox) {
     checkbox.addEventListener('keydown', function (evt) {
       if (evt.keyCode === 13) {
-        this.checked = !this.checked;
+        checkbox.checked = !checkbox.checked;
         window.debounce(renderFilteredAds);
       }
-    })
+    });
   });
 
   var disablePage = function () {

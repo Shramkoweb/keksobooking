@@ -58,9 +58,9 @@
     checkbox.addEventListener('keydown', function (evt) {
       if (evt.keyCode === 13) {
         evt.preventDefault();
-        this.checked = !this.checked;
+        checkbox.checked = !checkbox.checked;
       }
-    })
+    });
   });
 
   formRoomNumber.addEventListener('change', function () {

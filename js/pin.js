@@ -116,7 +116,7 @@
       if (index < PINS_NUMBER) {
         fragment.appendChild(renderPin(pin));
       }
-    })
+    });
 
     mapPins.appendChild(fragment);
   };
