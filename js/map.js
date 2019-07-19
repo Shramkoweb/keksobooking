@@ -19,6 +19,8 @@
     window.card.show(ads);
     window.form.enableFields(fieldsets);
     window.form.enableFields(mapFilters);
+    map.classList.remove('map--faded');
+    adForm.classList.remove('ad-form--disabled');
   };
 
   var onError = function (errorMessage) {
@@ -44,15 +46,14 @@
   var activatePage = function () {
     if (map.classList.contains('map--faded')) {
       window.backend.load(onSuccess, onError);
-      map.classList.remove('map--faded');
-      adForm.classList.remove('ad-form--disabled');
-
-      mapFillters.addEventListener('change', function () {
-        window.card.remove();
-        window.debounce(renderFilteredAds);
-      });
     }
   };
+
+
+  mapFillters.addEventListener('change', function () {
+    window.card.remove();
+    window.debounce(renderFilteredAds);
+  });
 
   filterCheckboxes.forEach(function (checkbox) {
     checkbox.addEventListener('keydown', function (evt) {
