@@ -14,7 +14,7 @@
   var getOfferFeatures = function (features, element) {
     features.forEach(function (item) {
       var featureElement = document.createElement('li');
-      featureElement.classList.add('feature', 'feature--' + item);
+      featureElement.classList.add('popup__feature', 'popup__feature--' + item);
       element.appendChild(featureElement);
     });
   };
