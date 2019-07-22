@@ -19,7 +19,7 @@
     HOUSE: 5000,
     PALACE: 10000
   };
-  var formRoomCapacity = {
+  var FormRoomCapacity = {
     1: ['1'],
     2: ['2', '1'],
     3: ['3', '2', '1'],
@@ -27,7 +27,7 @@
   };
 
   var capacitySync = function () {
-    var guests = formRoomCapacity[formRoomNumber.value];
+    var guests = FormRoomCapacity[formRoomNumber.value];
 
     Array.from(formCapacity.options).forEach(function (element) {
       if (guests.includes(element.value)) {
