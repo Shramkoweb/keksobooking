@@ -3,7 +3,7 @@
 (function () {
   var TIME_OUT = 10000;
   var CODE_SUCSESS = 200;
-  var URL = 'https://js.dump.academy/keksobooking';
+  var URL = 'https://javascript.pages.academy/keksobookin';
 
   var request = function (onSuccess, onError) {
     var xhrRequest = new XMLHttpRequest();
